@@ -3,7 +3,6 @@ package hello.model;
 import java.util.HashSet;
 import java.util.Set;
 
-//package es.uniovi.asw.model;
 
 //import javax.persistence.*;
 
@@ -22,7 +21,10 @@ public class Usuario {
 	//@JoinColumn(name = "CIUDADANO_ID")
 	private Ciudadano ciudadano;
 	
+	//@OneToMany(mappedBy="usuario")
 	private Set<Sugerencia> sugerencias = new HashSet<>();
+	//@OneToMany(mappedBy="usuario")
+	private Set<Comentario> comentarios = new HashSet<>();
 
 	Usuario() {
 	};
@@ -73,6 +75,34 @@ public class Usuario {
 
 	public void setSugerencias(Set<Sugerencia> sugerencias) {
 		this.sugerencias = sugerencias;
+	}
+	
+	public Set<Comentario> getComentarios() {
+		return new HashSet<>(comentarios);
+	}
+	
+	protected Set<Comentario> _getComentarios(){
+		return comentarios;
+	}
+
+	public void setComentarios(Set<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
+
+	protected void _addSugerencia(Sugerencia sugerencia){
+		sugerencias.add(sugerencia);
+	}
+	
+	protected void _removeSugerencia(Sugerencia sugerencia){
+		sugerencias.remove(sugerencia);
+	}
+	
+	protected void _addComentario(Comentario comentario) {
+		comentarios.add(comentario);
+	}
+	
+	protected void _removeComentario(Comentario comentario) {
+		comentarios.remove(comentario);
 	}
 
 	@Override

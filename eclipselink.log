@@ -1,0 +1,26 @@
+[EL Info]: 2017-02-23 02:40:58.692--ServerSession(740876905)--EclipseLink, version: Eclipse Persistence Services - 2.6.4.v20160829-44060b6
+[EL Info]: connection: 2017-02-23 02:40:59.042--ServerSession(740876905)--/file:/C:/Users/Alberto Cortina/Documents/GitHub/citizensLoader3a/target/citizensLoader0-0.0.1-jar-with-dependencies.jar_citizens login successful
+[EL Fine]: sql: 2017-02-23 02:40:59.072--ServerSession(740876905)--Connection(64547542)--SELECT ID, APELLIDOS, DNI, EMAIL, FECHANACIMIENTO, NACIONALIDAD, NOMBRE, RESIDENCIA FROM TCiudadanos WHERE (DNI = ?)
+	bind => [1 parameter bound]
+[EL Fine]: sql: 2017-02-23 02:40:59.085--ClientSession(1355977634)--Connection(64547542)--INSERT INTO TCiudadanos (APELLIDOS, DNI, EMAIL, FECHANACIMIENTO, NACIONALIDAD, NOMBRE, RESIDENCIA) VALUES (?, ?, ?, ?, ?, ?, ?)
+	bind => [7 parameters bound]
+[EL Fine]: sql: 2017-02-23 02:40:59.086--ClientSession(1355977634)--Connection(64547542)--CALL IDENTITY()
+[EL Fine]: sql: 2017-02-23 02:40:59.09--ClientSession(1355977634)--Connection(64547542)--INSERT INTO TUsuarios (CONTRASEÑA, USUARIO, CIUDADANO_ID) VALUES (?, ?, ?)
+	bind => [3 parameters bound]
+[EL Fine]: sql: 2017-02-23 02:40:59.091--ClientSession(1355977634)--Connection(64547542)--CALL IDENTITY()
+[EL Fine]: sql: 2017-02-23 02:40:59.093--ClientSession(1355977634)--Connection(64547542)--SELECT ID, APELLIDOS, DNI, EMAIL, FECHANACIMIENTO, NACIONALIDAD, NOMBRE, RESIDENCIA FROM TCiudadanos WHERE (DNI = ?)
+	bind => [1 parameter bound]
+[EL Fine]: sql: 2017-02-23 02:40:59.095--ClientSession(1355977634)--Connection(64547542)--INSERT INTO TCiudadanos (APELLIDOS, DNI, EMAIL, FECHANACIMIENTO, NACIONALIDAD, NOMBRE, RESIDENCIA) VALUES (?, ?, ?, ?, ?, ?, ?)
+	bind => [7 parameters bound]
+[EL Fine]: sql: 2017-02-23 02:40:59.096--ClientSession(1355977634)--Connection(64547542)--CALL IDENTITY()
+[EL Fine]: sql: 2017-02-23 02:40:59.097--ClientSession(1355977634)--Connection(64547542)--INSERT INTO TUsuarios (CONTRASEÑA, USUARIO, CIUDADANO_ID) VALUES (?, ?, ?)
+	bind => [3 parameters bound]
+[EL Fine]: sql: 2017-02-23 02:40:59.098--ClientSession(1355977634)--Connection(64547542)--CALL IDENTITY()
+[EL Fine]: sql: 2017-02-23 02:40:59.1--ClientSession(1355977634)--Connection(64547542)--SELECT ID, APELLIDOS, DNI, EMAIL, FECHANACIMIENTO, NACIONALIDAD, NOMBRE, RESIDENCIA FROM TCiudadanos WHERE (DNI = ?)
+	bind => [1 parameter bound]
+[EL Fine]: sql: 2017-02-23 02:40:59.102--ClientSession(1355977634)--Connection(64547542)--INSERT INTO TCiudadanos (APELLIDOS, DNI, EMAIL, FECHANACIMIENTO, NACIONALIDAD, NOMBRE, RESIDENCIA) VALUES (?, ?, ?, ?, ?, ?, ?)
+	bind => [7 parameters bound]
+[EL Fine]: sql: 2017-02-23 02:40:59.103--ClientSession(1355977634)--Connection(64547542)--CALL IDENTITY()
+[EL Fine]: sql: 2017-02-23 02:40:59.105--ClientSession(1355977634)--Connection(64547542)--INSERT INTO TUsuarios (CONTRASEÑA, USUARIO, CIUDADANO_ID) VALUES (?, ?, ?)
+	bind => [3 parameters bound]
+[EL Fine]: sql: 2017-02-23 02:40:59.106--ClientSession(1355977634)--Connection(64547542)--CALL IDENTITY()

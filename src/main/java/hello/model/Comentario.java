@@ -1,11 +1,21 @@
 package hello.model;
 
+import java.util.Date;
+
+//@Entity
+//@Table(name="TComentarios")
 public class Comentario {
 	
+	//@Id
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String contenido;
+	//@ManyToOne
 	private Sugerencia sugerencia;
+	//@ManyToOne
 	private Usuario usuario;
+	//@Temporal(TemporalType.DATE)
+	private Date fecha;
 	
 	Comentario(){}
 
@@ -14,6 +24,7 @@ public class Comentario {
 		this.contenido = contenido;
 		this.sugerencia = sugerencia;
 		this.usuario = usuario;
+		this.fecha = new Date();
 	}
 
 	public String getContenido() {
@@ -27,13 +38,25 @@ public class Comentario {
 	public Long getId() {
 		return id;
 	}
+	
+	public Date getFecha(){
+		return fecha;
+	}
 
 	public Sugerencia getSugerencia() {
 		return sugerencia;
 	}
+	
+	protected void _setSugerencia(Sugerencia sugerencia){
+		this.sugerencia = sugerencia;
+	}
 
 	public Usuario getUsuario() {
 		return usuario;
+	}
+	
+	protected void _setUsuario(Usuario usuario){
+		this.usuario = usuario;
 	}
 
 	@Override
