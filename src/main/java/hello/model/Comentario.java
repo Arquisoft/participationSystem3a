@@ -2,19 +2,21 @@ package hello.model;
 
 import java.util.Date;
 
-//@Entity
-//@Table(name="TComentarios")
+import javax.persistence.*;
+
+@Entity
+@Table(name="TComentarios")
 public class Comentario {
 	
-	//@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String contenido;
-	//@ManyToOne
+	@ManyToOne
 	private Sugerencia sugerencia;
-	//@ManyToOne
+	@ManyToOne
 	private Usuario usuario;
-	//@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.DATE)
 	private Date fecha;
 	
 	Comentario(){}

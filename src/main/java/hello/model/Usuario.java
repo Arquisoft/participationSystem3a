@@ -4,26 +4,26 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-//import javax.persistence.*;
+import javax.persistence.*;
 
-//@Entity
-//@Table(name = "TUsuarios")
+@Entity
+@Table(name = "TUsuarios")
 public class Usuario {
 
-	//@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String usuario; // Clave primaria
 	private String contraseña;
 
-	//@OneToOne
-	//@JoinColumn(name = "CIUDADANO_ID")
+	@OneToOne
+	@JoinColumn(name = "CIUDADANO_ID")
 	private Ciudadano ciudadano;
 	
-	//@OneToMany(mappedBy="usuario")
+	@OneToMany(mappedBy="usuario")
 	private Set<Sugerencia> sugerencias = new HashSet<>();
-	//@OneToMany(mappedBy="usuario")
+	@OneToMany(mappedBy="usuario")
 	private Set<Comentario> comentarios = new HashSet<>();
 
 	Usuario() {

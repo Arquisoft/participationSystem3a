@@ -1,23 +1,28 @@
 package hello.model;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-//@Entity
-//@Table(name = "TSugerencias")
+import javax.persistence.*;
+
+@Entity
+@Table(name = "TSugerencias")
 public class Sugerencia {
 	
-	//@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String contenido;
-	//@ManyToOne
+	@Temporal(TemporalType.DATE)
+	private Date fecha;
+	@ManyToOne
 	private Usuario usuario;
-	//@ManyToOne
+	@ManyToOne
 	private Categoria categoria;
 	private int votosPositivos;
 	private int votosNegativos;
 	
-	//@OneToMany(mappedBy="sugerencia")
+	@OneToMany(mappedBy="sugerencia")
 	private Set<Comentario> comentarios = new HashSet<>();
 	
 	Sugerencia(){}
@@ -25,6 +30,7 @@ public class Sugerencia {
 	public Sugerencia(String contenido, Categoria categoria, Usuario usuario) {
 		super();
 		this.contenido = contenido;
+		this.fecha = new Date();
 		this.usuario = usuario;
 		this.categoria = categoria;
 		this.votosPositivos = 0;
@@ -37,6 +43,10 @@ public class Sugerencia {
 
 	public void setContenido(String contenido) {
 		this.contenido = contenido;
+	}
+	
+	public Date getFecha() {
+		return fecha;
 	}
 
 	public Long getId() {

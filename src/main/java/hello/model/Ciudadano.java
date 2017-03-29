@@ -1,28 +1,28 @@
 package hello.model;
 
 import java.util.Date;
-//import javax.persistence.*;
+import javax.persistence.*;
 
-//@Entity
-//@Table(name = "TCiudadanos")
+@Entity
+@Table(name = "TCiudadanos")
 public class Ciudadano {
 
-	//@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String nombre;
 	private String apellidos;
 	private String email;
 
-	//@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
 
 	private String residencia;
 	private String nacionalidad;
 	private String dni; // Clave primaria
 
-	//@OneToOne(mappedBy = "ciudadano")
+	@OneToOne(mappedBy = "ciudadano")
 	private Usuario usuario;
 
 	Ciudadano() {
