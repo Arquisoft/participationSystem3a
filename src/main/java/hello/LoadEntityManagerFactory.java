@@ -4,8 +4,6 @@ import javax.persistence.*;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import com.sun.security.ntlm.Client;
-
 
 /**
  * Fuerza a que se cargen los parámetros de configuración,
@@ -15,7 +13,7 @@ public class LoadEntityManagerFactory {
 
 	 public static void main(String[] args) {
 			EntityManagerFactory emf = Persistence
-				.createEntityManagerFactory("carworkshop");
+				.createEntityManagerFactory("citizens");
 
 			EntityManager ent = emf.createEntityManager();
 			EntityTransaction trx = ent.getTransaction();

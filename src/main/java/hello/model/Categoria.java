@@ -3,15 +3,17 @@ package hello.model;
 import java.util.HashSet;
 import java.util.Set;
 
-//@Entity
-//@Table(name="TCategorias")
+import javax.persistence.*;
+
+@Entity
+@Table(name="TCategorias")
 public class Categoria {
 	
-	//@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nombre;
-	//@OneToMany(mappedBy="categoria")
+	@OneToMany(mappedBy="categoria")
 	private Set<Sugerencia> sugerencias = new HashSet<>();
 	
 	Categoria(){}
