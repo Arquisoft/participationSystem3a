@@ -15,4 +15,9 @@
 	<named-query name="Usuario.findByUserAndPassword">
 		<query>Select u From Usuario u Where u.usuario = ?1 and u.contraseña = ?2</query>
 	</named-query>	
+	
+	<!-- Sugerencia queries -->
+	<named-query name="Sugerencia.findAll">
+		<query>Select s from Sugerencia s</query>
+	</named-query>
 </entity-mappings>
