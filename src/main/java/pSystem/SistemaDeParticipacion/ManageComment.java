@@ -1,8 +1,12 @@
 package pSystem.SistemaDeParticipacion;
 
-import pSystem.model.Comentario;
+import java.util.List;
+
+import pSystem.model.Comment;
 
 public interface ManageComment {
 	
-	public void addComment(Comentario comentario);
+	public void addComment(Comment comentario);
+	public List<Comment> getCommentsByDate(Long id);
+	public List<Comment> getCommentsByPopularity(Long id);
 }
