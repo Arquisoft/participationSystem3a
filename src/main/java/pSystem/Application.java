@@ -55,7 +55,7 @@ public class Application {
     		
     		commentService.addComment(c);
     		VotoComentario votoComentario = new VotoComentario(c, u, true);
-    		vRepository.save(votoComentario);
+    		//vRepository.save(votoComentario);
     		
     		Comment c1 = new Comment("prueba", s, u);    		
     		Calendar cal = Calendar.getInstance();
