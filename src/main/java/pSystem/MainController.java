@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import pSystem.SistemaDeParticipacion.MComment;
+import pSystem.SistemaDeParticipacion.MSuggestion;
+import pSystem.model.Sugerencia;
 import pSystem.model.Usuario;
 import pSystem.persistence.UsuarioFinder;
 import pSystem.producers.KafkaProducer;
@@ -28,7 +31,7 @@ public class MainController {
     
     @RequestMapping("/send")
     public String send(Model model, @ModelAttribute Message message) {
-        kafkaProducer.send("exampleTopic", message.getMessage());
+        kafkaProducer.send("exampleTopic", message.getMessage());        
         return "redirect:/";
     }
     

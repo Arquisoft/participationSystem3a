@@ -8,5 +8,6 @@ public interface ManageSuggestion {
 	
 	public void addSuggestion(Sugerencia sugerencia);
 	public void updateSuggestion(Sugerencia sugerencia);
-	public List<Sugerencia> getSuggestion(Long id);
+	public Sugerencia getSuggestion(Long id);
+	public List<Sugerencia> getSuggestions();
 }
