@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import pSystem.model.types.SuggestionStatus;
+
 @Entity
 @Table(name = "TSugerencias")
 public class Suggestion implements Serializable {	
@@ -17,6 +19,9 @@ public class Suggestion implements Serializable {
 	private Long id;
 	
 	private String contenido;
+	
+	@Enumerated(EnumType.STRING)
+	private SuggestionStatus estado;
 	
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
@@ -103,6 +108,14 @@ public class Suggestion implements Serializable {
 	
 	public void addVotoNegativo() {
 		this.votosNegativos++;
+	}
+
+	public SuggestionStatus getEstado() {
+		return estado;
+	}
+
+	public void setEstado(SuggestionStatus estado) {
+		this.estado = estado;
 	}
 
 	@Override

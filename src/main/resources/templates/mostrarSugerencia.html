@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Mostrar Sugerencia</title>
+</head>
+<body>
+<h1>Sugerencia seleccionada</h1>
+	<div>
+		<table>
+			<tr>
+				<th>Contenido</th>
+				<th></th>
+				<th>Usuario</th>
+			</tr>
+			<tr>	
+		        <td th:text="${seleccionada.contenido}"/>
+		        <td/>
+		        <td th:text="${seleccionada.usuario.usuario}"/>
+			</tr>
+		</table>
+	</div>
+	
+	<div>
+		<form th:action="@{/logout}" method="POST"> 
+					<button id="logout" type="submit" name="logout">Nuevo comentario</button>
+		</form>
+	</div>
+	
+	<div th:id="comentarios">
+		<h2>Comentarios</h2>
+			<table>
+				<tr>
+					<th>Contenido</th>
+					<th></th>
+					<th>Usuario</th>
+				</tr>
+				<tr th:each="c : ${seleccionada.comentarios}">	
+			                  <td th:text="${c.id}"></td>
+			                  <td></td>
+		       				  <td th:text="${c.usuario.usuario}"></td>
+		       				  <td></td>
+				</tr>
+			</table>
+</div>
+</body>
+</html>
