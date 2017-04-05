@@ -16,8 +16,8 @@ public class SuggestionServiceImpl implements SuggestionService {
 	private SuggestionRepository suggestionRepository;
 
 	@Override
-	public void addSuggestion(Suggestion sugerencia) {
-		suggestionRepository.save(sugerencia);
+	public Suggestion addSuggestion(Suggestion sugerencia) {
+		return suggestionRepository.save(sugerencia);
 	}
 
 	@Override

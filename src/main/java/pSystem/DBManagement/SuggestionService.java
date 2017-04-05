@@ -6,7 +6,7 @@ import pSystem.model.Suggestion;
 
 public interface SuggestionService {
 	
-	public void addSuggestion(Suggestion sugerencia);
+	public Suggestion addSuggestion(Suggestion sugerencia);
 	public void updateSuggestion(Suggestion sugerencia);
 	public List<Suggestion> getSuggestions();
 	public Suggestion getSuggestion(Long id);

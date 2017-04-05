@@ -45,24 +45,26 @@ public class Application {
     	return (args) -> {
     		User u = new User("prueba");
     		u.setContraseña("prueba");
-    		userService.addUser(u);
+    		User u2 = userService.addUser(u);
     		
-    		Suggestion s = new Suggestion("prueba", null, u);
-    		suggestionService.addSuggestion(s);
+    		Suggestion s = new Suggestion("prueba", null, u2);
+    		Suggestion s2 = suggestionService.addSuggestion(s);
     		
-    		Comment c = new Comment("prueba", s, u);
+    		Comment c = new Comment("prueba", s2, u2);
     		c.setFecha(new Date());
     		
-    		commentService.addComment(c);
-    		VotoComentario votoComentario = new VotoComentario(c, u, true);
+    		Comment c2 = commentService.addComment(c);
+    		
+    		VotoComentario votoComentario = new VotoComentario(c2, u2, true);
     		vRepository.save(votoComentario);
+    	
     		
-    		Comment c1 = new Comment("prueba", s, u);    		
-    		Calendar cal = Calendar.getInstance();
-    		cal.add(Calendar.DAY_OF_WEEK, -1);    		
-    		c1.setFecha(cal.getTime());
-    		commentService.addComment(c1);
-    		
+//    		Comment c1 = new Comment("prueba", s, u);    		
+//    		Calendar cal = Calendar.getInstance();
+//    		cal.add(Calendar.DAY_OF_WEEK, -1);    		
+//    		c1.setFecha(cal.getTime());
+//    		commentService.addComment(c1);
+//    		
     		List<Comment> aux = commentService.findBySugerenciaOrderByFechaDesc(s);
     		
     		
