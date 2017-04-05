@@ -17,6 +17,7 @@ import pSystem.DBManagement.CommentService;
 import pSystem.DBManagement.SuggestionService;
 import pSystem.DBManagement.UserService;
 import pSystem.model.*;
+import pSystem.persistence.CategoryRepository;
 import pSystem.persistence.SuggestionRepository;
 import pSystem.persistence.VotoComentarioRepository;
 
@@ -35,6 +36,9 @@ public class Application {
 	
 	@Autowired
 	private VotoComentarioRepository vRepository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
 	
     public static void main(String[] args) {
     	SpringApplication.run(Application.class, args);
@@ -56,6 +60,7 @@ public class Application {
     		commentService.addComment(c);
     		VotoComentario votoComentario = new VotoComentario(c, u, true);
     		//vRepository.save(votoComentario);
+    		
     		
     		Comment c1 = new Comment("prueba", s, u);    		
     		Calendar cal = Calendar.getInstance();
@@ -79,6 +84,9 @@ public class Application {
     		
     		
 //    		sR.save(s);
+    		
+    		Category cat1 = new Category("Categoria1");
+    		categoryRepository.save(cat1);
     		
     	};
     }

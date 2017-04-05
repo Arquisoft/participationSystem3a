@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import pSystem.DBManagement.CategoryService;
 import pSystem.DBManagement.SuggestionService;
 import pSystem.DBManagement.UserService;
+import pSystem.model.Category;
 import pSystem.model.Suggestion;
 import pSystem.model.User;
-//import pSystem.producers.KafkaProducer;
+import pSystem.persistence.CategoryRepository;
 import pSystem.producers.KafkaProducer;
 
 @Controller
@@ -31,7 +31,7 @@ public class MainController {
 	  private SuggestionService suggestionService;
 	  
 	  @Autowired
-	  private CategoryService categoryService;
+	  private CategoryRepository categoryRepository;
 	
     @Autowired
     private KafkaProducer kafkaProducer;
@@ -53,7 +53,7 @@ public class MainController {
     	User userLogin = userService.findByUserAndPassword(nombre, password);
     	if(userLogin!=null){
     		session.setAttribute("user", userLogin);
-    		//cargarSugerencias(model);
+    		cargarSugerencias(model);
     	}
     	else{
     		return "login";
@@ -69,9 +69,31 @@ public class MainController {
     }
     
     private void cargarSugerencias(Model model){
-    //	List<Category> categorias = categoryService.getCategories();
-    	//model.addAttribute("categorias", categorias);
     	List<Suggestion> sugerencias = suggestionService.getSuggestions();
     	model.addAttribute("sugerencias", sugerencias);
+    }
+    
+    @RequestMapping("/nuevaSugerencia")
+    public String nuevaSugerencia(){
+    	return "añadirSugerencia";
+    }
+    
+    @RequestMapping(value="/anadirSugerencia", method = RequestMethod.POST)
+    public String añadirSugerencia(HttpSession session, Model model, @RequestParam String contenido){
+    	List<Category> categorias = categoryRepository.findAll();    	
+    	Suggestion suggestion = new Suggestion(contenido, categorias.get(0), (User)session.getAttribute("user"));
+    	suggestionService.addSuggestion(suggestion);
+    	cargarSugerencias(model);
+    	return "listaSugerencias";
+    }
+    
+    @RequestMapping(value="/mostrar", method = RequestMethod.POST)
+    public String mostrarSugerencia(Model model, @RequestParam("sugerencia") Long id){
+    	Suggestion sugerencia = suggestionService.getSuggestion(id);
+    	if(sugerencia!=null){
+	    	model.addAttribute("seleccionada", sugerencia);
+	    	return "mostrarSugerencia";
+    	}
+    	return "listaSugerencias";
     }
 }
