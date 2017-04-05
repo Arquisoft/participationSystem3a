@@ -19,6 +19,7 @@ public class User implements Serializable {
 
 	private String usuario; // Clave primaria
 	private String contraseña;
+	private boolean isAdmin;
 
 	@OneToOne
 	@JoinColumn(name = "CIUDADANO_ID")
@@ -106,6 +107,14 @@ public class User implements Serializable {
 	
 	protected void _removeComentario(Comment comentario) {
 		comentarios.remove(comentario);
+	}
+	
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 
 	@Override

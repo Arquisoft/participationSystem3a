@@ -17,7 +17,6 @@ public class Citizen implements Serializable {
 	private String nombre;
 	private String apellidos;
 	private String email;
-	private boolean isAdmin;
 
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
@@ -110,14 +109,6 @@ public class Citizen implements Serializable {
 
 	protected void _setUsuario(User usuario) {
 		this.usuario = usuario;
-	}
-
-	public boolean isAdmin() {
-		return isAdmin;
-	}
-
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
 	}
 
 	@Override

@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pSystem.DBManagement.SuggestionService;
 import pSystem.DBManagement.UserService;
 import pSystem.model.Category;
+import pSystem.model.Comment;
 import pSystem.model.Suggestion;
 import pSystem.model.User;
 import pSystem.persistence.CategoryRepository;
+import pSystem.persistence.CommentRepository;
 import pSystem.producers.KafkaProducer;
 
 @Controller
@@ -32,9 +34,14 @@ public class MainController {
 	  
 	  @Autowired
 	  private CategoryRepository categoryRepository;
+	  
+	  @Autowired
+	  private CommentRepository CommentRepository;
 	
-    @Autowired
-    private KafkaProducer kafkaProducer;
+	  @Autowired
+	  private KafkaProducer kafkaProducer;
+	    
+	  private Suggestion seleccionada;
 
     @RequestMapping("/")
     public String landing(Model model) {
@@ -95,5 +102,19 @@ public class MainController {
 	    	return "mostrarSugerencia";
     	}
     	return "listaSugerencias";
+    }
+    
+    @RequestMapping("/nuevoComentario")
+    public String nuevoComentario(@RequestParam("sugerencia") Suggestion sugerencia){
+    	this.seleccionada=sugerencia;
+    	return "añadirComentario";
+    }
+    
+    @RequestMapping(value="/anadirComentario", method = RequestMethod.POST)
+    public String añadirComentario(HttpSession session, Model model, @RequestParam String contenido){
+    	Comment comentario = new Comment(contenido, seleccionada, (User)session.getAttribute("user"));
+    	CommentRepository.save(comentario);
+    	model.addAttribute("seleccionada", suggestionService.getSuggestion(seleccionada.getId()));
+    	return "mostrarSugerencia";
     }
 }

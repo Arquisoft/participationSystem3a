@@ -19,12 +19,6 @@
 		</table>
 	</div>
 	
-	<div>
-		<form th:action="@{/nuevoComentario(sugerencia=${seleccionada.id})}" method="POST"> 
-					<button id="nuevoComentario" type="submit" name="nuevoComentario">Nuevo comentario</button>
-		</form>
-	</div>
-	
 	<div th:id="comentarios">
 		<h2>Comentarios</h2>
 			<table>

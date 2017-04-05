@@ -1,0 +1,15 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Anadir Comentario</title>
+</head>
+<body>
+<h1>Nueva comentario</h1>
+<form th:action="@{/anadirComentario}" method="POST">
+	<div>
+	    <label for="contenido">Contenido: </label>
+	    <input type="text" id="contenido" name="contenido"/>
+    </div>
+    <button id="nuevaSugerencia" type="submit">Nuevo comentario</button>
+</form>
+</body>
+</html>
