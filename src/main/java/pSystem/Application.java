@@ -1,16 +1,9 @@
 package pSystem;
 
-
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-//import org.springframework.cloud.bootstrap.encrypt.KeyProperties.Rsa;
 import org.springframework.context.annotation.Bean;
 
 import pSystem.DBManagement.CommentService;
@@ -19,7 +12,6 @@ import pSystem.DBManagement.UserService;
 import pSystem.model.*;
 import pSystem.persistence.CategoryRepository;
 import pSystem.persistence.SuggestionRepository;
-import pSystem.persistence.VotoComentarioRepository;
 
 
 @SpringBootApplication
@@ -35,9 +27,6 @@ public class Application {
 	private SuggestionService suggestionService;
 	
 	@Autowired
-	private VotoComentarioRepository vRepository;
-	
-	@Autowired
 	private CategoryRepository categoryRepository;
 	
     public static void main(String[] args) {
@@ -47,55 +36,41 @@ public class Application {
     @Bean
     public CommandLineRunner iniciarBD(SuggestionRepository sR){
     	return (args) -> {
-    		User u = new User("prueba");
-    		u.setContraseña("prueba");
-    		User u2 = userService.addUser(u);
+    		User user1 = new User("user1");
+    		user1.setContraseña("user1");
     		
-    		Suggestion s = new Suggestion("prueba", null, u2);
-    		Suggestion s2 = suggestionService.addSuggestion(s);
+    		userService.addUser(user1);
     		
-    		Comment c = new Comment("prueba", s2, u2);
-    		c.setFecha(new Date());
+    		User user2 = new User("user2");
+    		user2.setContraseña("user2");
     		
+    		userService.addUser(user2);
+    		
+    		User admin = new User("admin");
+    		admin.setContraseña("admin");
+    		admin.setAdmin(true);
 
-    		Comment c2 = commentService.addComment(c);
-
-    		commentService.addComment(c);
-    		VotoComentario votoComentario = new VotoComentario(c2, u2, true);
-    		vRepository.save(votoComentario);
-//    		
-//
-//    		
-//    		VotoComentario votoComentario = new VotoComentario(c2, u2, true);
-//    		vRepository.save(votoComentario);
-    	
+    		userService.addUser(admin);
     		
-//    		Comment c1 = new Comment("prueba", s, u);    		
-//    		Calendar cal = Calendar.getInstance();
-//    		cal.add(Calendar.DAY_OF_WEEK, -1);    		
-//    		c1.setFecha(cal.getTime());
-//    		commentService.addComment(c1);
-//    		
-    		List<Comment> aux = commentService.findBySugerenciaOrderByFechaDesc(s);
+    		Category categoria1 = new Category("Categoria1");
+    		Category categoria2 = new Category("Categoria2");
     		
+    		categoryRepository.save(categoria1);
+    		categoryRepository.save(categoria2);
     		
-//    		VotoComentario votoComentario2 = new VotoComentario(c1, u, true);
-//    		
-//    		
-//    		vRepository.save(votoComentario2);
+    		Suggestion sugerencia1 = new Suggestion("Sugerencia1 de prueba", categoria1, user1);
+    		suggestionService.addSuggestion(sugerencia1);
+    		Suggestion sugerencia2 = new Suggestion("Sugerencia2 de prueba", categoria1, user1);
+    		suggestionService.addSuggestion(sugerencia2);
+    		Suggestion sugerencia3 = new Suggestion("Sugerencia3 de prueba", categoria2, user1);
+    		suggestionService.addSuggestion(sugerencia3);
     		
-    		for(Comment co: aux) {
-    			System.out.println(co.getId());
-    		}
-//    		System.out.println(userService.findByUserAndPassword("prueba", "prueba").getContraseña());
-    		
-    		
-    		
-//    		sR.save(s);
-    		
-    		Category cat1 = new Category("Categoria1");
-    		categoryRepository.save(cat1);
-    		
+    		Comment comentario1 = new Comment("Comentario1 de prueba", sugerencia1, user2);
+    		commentService.addComment(comentario1);
+    		Comment comentario2 = new Comment("Comentario2 de prueba", sugerencia1, user2);
+    		commentService.addComment(comentario2);
+    		Comment comentario3 = new Comment("Comentario3 de prueba", sugerencia1, user2);
+    		commentService.addComment(comentario3);
     	};
     }
 }

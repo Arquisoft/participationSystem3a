@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import pSystem.DBManagement.SuggestionService;
 import pSystem.DBManagement.UserService;
+import pSystem.model.Association;
 import pSystem.model.Category;
 import pSystem.model.Comment;
 import pSystem.model.Suggestion;
@@ -61,18 +62,28 @@ public class MainController {
     	if(userLogin!=null){
     		session.setAttribute("user", userLogin);
     		cargarSugerencias(model);
+    		if(userLogin.isAdmin()){
+    			return "listaSugerenciasAdmin";
+    		}
+    		else{
+    			return "listaSugerencias";
+    		}
     	}
     	else{
     		return "login";
     	}
-    	
-    	return "listaSugerencias";
     }
     
     @RequestMapping(value="/logout", method = RequestMethod.POST)
     public String cerrarSesion(HttpSession session){
     	session.setAttribute("user", null);
     	return "login";
+    }
+    
+    @RequestMapping(value="/listarSugerencias", method = RequestMethod.POST)
+    public String irALista(Model model){
+    	cargarSugerencias(model);
+    	return "listaSugerencias";
     }
     
     private void cargarSugerencias(Model model){
@@ -95,10 +106,15 @@ public class MainController {
     }
     
     @RequestMapping(value="/mostrar", method = RequestMethod.POST)
-    public String mostrarSugerencia(Model model, @RequestParam("sugerencia") Long id){
+    public String mostrarSugerencia(HttpSession session, Model model, @RequestParam("sugerencia") Long id){
     	Suggestion sugerencia = suggestionService.getSuggestion(id);
+    	this.seleccionada=sugerencia;
     	if(sugerencia!=null){
 	    	model.addAttribute("seleccionada", sugerencia);
+	    	User user = (User)session.getAttribute("user");
+	    	if(user.isAdmin()){
+	    		return "mostrarSugerenciaAdmin";
+	    	}
 	    	return "mostrarSugerencia";
     	}
     	return "listaSugerencias";
@@ -116,5 +132,24 @@ public class MainController {
     	CommentRepository.save(comentario);
     	model.addAttribute("seleccionada", suggestionService.getSuggestion(seleccionada.getId()));
     	return "mostrarSugerencia";
+    }
+    
+    @RequestMapping(value="/eliminarComentario", method = RequestMethod.POST)
+    public String eliminarComentario(HttpSession session, Model model, @RequestParam("comentario") Long id){
+    	CommentRepository.delete(id);
+    	model.addAttribute("seleccionada", suggestionService.getSuggestion(seleccionada.getId()));
+    	return "mostrarSugerenciaAdmin";
+    }
+    
+    @RequestMapping(value="/eliminarSugerencia", method = RequestMethod.POST)
+    public String eliminarSugerencia(Model model, @RequestParam("sugerencia") Long id){
+    	Suggestion s = suggestionService.getSuggestion(id);
+    	Association.AsignarSugerencia.unlink(s.getUsuario(), s);
+    	for(Comment c: s.getComentarios()){
+    		CommentRepository.delete(c);
+    	}
+    	suggestionService.deleteSuggestion(id);
+    	cargarSugerencias(model);
+    	return "listaSugerenciasAdmin";
     }
 }

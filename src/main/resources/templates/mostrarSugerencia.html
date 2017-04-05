@@ -3,7 +3,12 @@
 <title>Mostrar Sugerencia</title>
 </head>
 <body>
-<h1>Sugerencia seleccionada</h1>
+	<div>
+		<form th:action="@{/listarSugerencias}" method="POST"> 
+					<button id="listar" type="submit" name="listar">Lista de sugerencias</button>
+		</form>
+	</div>
+	<h1>Sugerencia seleccionada</h1>
 	<div>
 		<table>
 			<tr>

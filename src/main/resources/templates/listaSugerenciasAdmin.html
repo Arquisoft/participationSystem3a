@@ -33,6 +33,14 @@
 		       				 
 		       				  </form>
 		       				  </td> 
+		       				  <td>
+		       				  <form th:action="@{/eliminarSugerencia(sugerencia=${s.id})}" method="POST">
+		       				  	<button id="eliminar" type="submit" name="eliminar" th:value="${s.contenido}">
+		       				  	Eliminar
+		       				  	</button>
+		       				 
+		       				  </form>
+		       				  </td> 
 				</tr>
 			</table>
 </div>

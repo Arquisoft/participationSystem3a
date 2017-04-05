@@ -10,5 +10,6 @@ public interface SuggestionService {
 	public void updateSuggestion(Suggestion sugerencia);
 	public List<Suggestion> getSuggestions();
 	public Suggestion getSuggestion(Long id);
+	public void deleteSuggestion(Long id);
 	
 }
