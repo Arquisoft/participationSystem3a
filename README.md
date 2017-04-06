@@ -11,6 +11,10 @@ Skeleton of participants module
 
 # Authors
 
-- Herminio García González (@herminiogg)
-- Jose Emilio Labra Gayo (@labra)
+- Pelayo Alvarez Garcia
+- Alberto Cortina Eduarte
+
+# Informacion de la aplicacion
+
+- arrancar en el puerto 8182
 
