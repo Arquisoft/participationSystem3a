@@ -9,7 +9,7 @@ public class VotoComentarioKey implements Serializable {
 	Long user;
 	Long comment;
 	
-	VotoComentarioKey() {}
+	public VotoComentarioKey() {}
 	
 	public VotoComentarioKey(Long user, Long comment) {
 		this.user = user;

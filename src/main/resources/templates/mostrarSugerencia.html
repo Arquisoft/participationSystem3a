@@ -11,20 +11,36 @@
 	</div>
 	<h1>Sugerencia seleccionada</h1>
 	<div>
-		<table>
+		<table border="1">
 			<tr>
 				<th>Contenido</th>
 				<th></th>
 				<th>Usuario</th>
+				<th>Apoyar</th>
+				<th>Rechazar</th>
 			</tr>
 			<tr>	
 		        <td th:text="${seleccionada.contenido}"/>
 		        <td/>
 		        <td th:text="${seleccionada.usuario.usuario}"/>
+		        <td>aaa</td>
+		        <td>bbbb</td>      				 
 			</tr>
+			<tr>
+				<td/><td/><td/>
+				<td align="center">
+    				<form th:action="@{/mostrar(sugerencia=${seleccionada.id})}" method="POST">
+    					<button id="mas" type="submit" name="mas" th:value="${seleccionada.contenido}">+</button>
+    				</form>
+    		    </td> 
+      			<td align="center">
+      				<form th:action="@{/mostrar(sugerencia=${seleccionada.id})}" method="POST">
+      					<button id="menos" type="submit" name="menos" th:value="${seleccionada.contenido}">-</button>
+      				</form>
+      			</td> 
+			</tr> 
 		</table>
 	</div>
-	
 	<div>
 		<form th:action="@{/nuevoComentario(sugerencia=${seleccionada.id})}" method="POST"> 
 					<button id="nuevoComentario" type="submit" name="nuevoComentario">Nuevo comentario</button>
@@ -33,19 +49,19 @@
 	
 	<div th:id="comentarios">
 		<h2>Comentarios</h2>
-			<table>
+			<table border="1">
 				<tr>
 					<th>Contenido</th>
 					<th></th>
 					<th>Usuario</th>
 				</tr>
 				<tr th:each="c : ${seleccionada.comentarios}">	
-			                  <td th:text="${c.contenido}"></td>
-			                  <td></td>
-		       				  <td th:text="${c.usuario.usuario}"></td>
-		       				  <td></td>
+			        <td th:text="${c.contenido}"></td>
+			        <td></td>
+		       		<td th:text="${c.usuario.usuario}"></td>
+		       		<td></td>
 				</tr>
 			</table>
-</div>
+	</div>
 </body>
 </html>
