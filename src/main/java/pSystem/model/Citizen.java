@@ -4,12 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "TCiudadanos")
 public class Citizen implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
-	
+		
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -26,7 +25,7 @@ public class Citizen implements Serializable {
 	private String dni;
 
 	@OneToOne(mappedBy = "ciudadano")
-	private User usuario;
+	private User user;
 
 	Citizen() {}
 
@@ -103,19 +102,19 @@ public class Citizen implements Serializable {
 
 	// No hay set de dni
 
-	public User getUsuario() {
-		return usuario;
+	public User getUser() {
+		return user;
 	}
 
-	protected void _setUsuario(User usuario) {
-		this.usuario = usuario;
+	protected void _setUser(User user) {
+		this.user = user;
 	}
 
 	@Override
 	public String toString() {
 		return "Ciudadano [nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email + ", fechaNacimiento="
 				+ fechaNacimiento + ", residencia=" + residencia + ", nacionalidad=" + nacionalidad + ", dni=" + dni
-				+ ", usuario=" + usuario +"]";
+				+ ", usuario=" + user +"]";
 	}
 
 	@Override

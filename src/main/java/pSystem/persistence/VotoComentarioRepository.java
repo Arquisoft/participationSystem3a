@@ -1,10 +1,12 @@
 package pSystem.persistence;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import pSystem.model.VotoComentario;
-import pSystem.model.VotoComentarioKey;
+import pSystem.model.CommentVote;
+import pSystem.model.CommentVoteKey;
 
-public interface VotoComentarioRepository extends JpaRepository<VotoComentario, VotoComentarioKey> {
+@Repository
+public interface VotoComentarioRepository extends JpaRepository<CommentVote, CommentVoteKey> {
 
 }

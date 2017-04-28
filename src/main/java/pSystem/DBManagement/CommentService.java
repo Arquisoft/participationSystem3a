@@ -8,7 +8,7 @@ import pSystem.model.Suggestion;
 public interface CommentService {
 	
 	Comment addComment(Comment comentario);
-	List<Comment> getCommentsByDate(Long id);
+	void deleteComment(Comment comentario);	
 	List<Comment> getCommentsByPopularity(Long id);
 	List<Comment> findBySugerenciaOrderByFechaDesc(Suggestion sugerencia);
 	List<Comment> findBySugerenciaOrderByFechaAsc(Suggestion sugerencia);

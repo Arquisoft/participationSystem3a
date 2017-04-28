@@ -8,12 +8,11 @@ import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+@SuppressWarnings("serial")
 @Entity
-@IdClass(VotoComentarioKey.class)
+@IdClass(CommentVoteKey.class)
 @Table(name="TVotosComentarios")
-public class VotoComentario implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
+public class CommentVote implements Serializable {
 
 	@Id
 	@ManyToOne
@@ -25,19 +24,20 @@ public class VotoComentario implements Serializable {
 	
 	private boolean votoAFavor;
 	
-	VotoComentario() {}
+	CommentVote() {}
 
-	public VotoComentario(Comment comment, User user, boolean votoAFavor) {		
+	public CommentVote(Comment comment, User user, boolean votoAFavor) {		
 		this.comment = comment;
 		this.user = user;
 		this.votoAFavor = votoAFavor;
+		Association.VotarComentario.link(comment, this, user);
 	}
 
 	public Comment getComment() {
 		return comment;
 	}
 
-	protected void _setComment(Comment comment) {
+	public void _setComment(Comment comment) {
 		this.comment = comment;
 	}
 
@@ -45,7 +45,7 @@ public class VotoComentario implements Serializable {
 		return user;
 	}
 
-	protected void _setUser(User user) {
+	public void _setUser(User user) {
 		this.user = user;
 	}
 

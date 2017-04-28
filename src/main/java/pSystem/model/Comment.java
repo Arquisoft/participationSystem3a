@@ -7,11 +7,10 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name="TComentarios")
 public class Comment implements Serializable {	
-	
-	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,21 +22,21 @@ public class Comment implements Serializable {
 	private Suggestion sugerencia;
 	
 	@ManyToOne
-	private User usuario;
+	private User user;
 	
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
 	
 	@OneToMany(mappedBy="comment")
-	private Set<VotoComentario> votos = new HashSet<>();
+	private Set<CommentVote> votos = new HashSet<>();
 	
 	Comment(){}
 
-	public Comment(String contenido, Suggestion sugerencia, User usuario) {
+	public Comment(String contenido, Suggestion sugerencia, User user) {
 		super();
 		this.contenido = contenido;
 		this.sugerencia = sugerencia;
-		this.usuario = usuario;
+		this.user = user;
 		this.fecha = new Date();
 	}
 
@@ -69,19 +68,19 @@ public class Comment implements Serializable {
 		this.sugerencia = sugerencia;
 	}
 
-	public User getUsuario() {
-		return usuario;
+	public User getUser() {
+		return user;
 	}
 	
-	protected void _setUsuario(User usuario){
-		this.usuario = usuario;
+	protected void _setUser(User user){
+		this.user = user;
 	}
 
-	public Set<VotoComentario> getVotos() {
+	public Set<CommentVote> getVotos() {
 		return new HashSet<>(votos);
 	}
 
-	protected void _setVotos(Set<VotoComentario> votos) {
+	protected void _setVotos(Set<CommentVote> votos) {
 		this.votos = votos;
 	}
 
@@ -91,7 +90,7 @@ public class Comment implements Serializable {
 		int result = 1;
 		result = prime * result + ((contenido == null) ? 0 : contenido.hashCode());
 		result = prime * result + ((sugerencia == null) ? 0 : sugerencia.hashCode());
-		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
 
@@ -114,10 +113,10 @@ public class Comment implements Serializable {
 				return false;
 		} else if (!sugerencia.equals(other.sugerencia))
 			return false;
-		if (usuario == null) {
-			if (other.usuario != null)
+		if (user == null) {
+			if (other.user != null)
 				return false;
-		} else if (!usuario.equals(other.usuario))
+		} else if (!user.equals(other.user))
 			return false;
 		return true;
 	}
@@ -125,6 +124,6 @@ public class Comment implements Serializable {
 	@Override
 	public String toString() {
 		return "Comentario [id=" + id + ", contenido=" + contenido + ", sugerencia=" + sugerencia + ", usuario="
-				+ usuario + "]";
+				+ user + "]";
 	};
 }

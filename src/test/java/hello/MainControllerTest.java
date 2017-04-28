@@ -23,7 +23,7 @@ import pSystem.UserInfo;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-@IntegrationTest({"server.port=0"})
+@IntegrationTest({"server.port=8182"})
 public class MainControllerTest {
 
     @Value("${local.server.port}")

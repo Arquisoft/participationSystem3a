@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import pSystem.DBManagement.CommentService;
+import pSystem.DBManagement.CommentVoteService;
 import pSystem.DBManagement.SuggestionService;
 import pSystem.DBManagement.UserService;
 import pSystem.model.*;
@@ -33,6 +34,9 @@ public class Application {
 	
 	@Autowired
 	private SuggestionService suggestionService;
+	
+	@Autowired
+	private CommentVoteService voteService;
 	
 	@Autowired
 	private VotoComentarioRepository vRepository;
@@ -58,11 +62,10 @@ public class Application {
     		c.setFecha(new Date());
     		
 
-    		Comment c2 = commentService.addComment(c);
-
-    		commentService.addComment(c);
-    		VotoComentario votoComentario = new VotoComentario(c2, u2, true);
-    		vRepository.save(votoComentario);
+    		Comment c2 = commentService.addComment(c);    	
+    		
+    		
+    		voteService.vote(c2,u2,true);
 //    		
 //
 //    		

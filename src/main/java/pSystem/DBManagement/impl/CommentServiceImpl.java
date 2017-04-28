@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import pSystem.DBManagement.CommentService;
 import pSystem.model.Comment;
@@ -11,6 +12,7 @@ import pSystem.model.Suggestion;
 import pSystem.persistence.CommentRepository;
 
 @Service
+@Transactional
 public class CommentServiceImpl implements CommentService {
 	
 	@Autowired
@@ -21,6 +23,11 @@ public class CommentServiceImpl implements CommentService {
 		return commentRepository.save(comentario);
 	}
 
+	@Override
+	public void deleteComment(Comment comentario) {
+		commentRepository.delete(comentario);
+	}
+	
 	@Override
 	public List<Comment> getCommentsByPopularity(Long id) {
 		// TODO Auto-generated method stub
@@ -35,11 +42,5 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public List<Comment> findBySugerenciaOrderByFechaAsc(Suggestion sugerencia) {
 		return commentRepository.findBySugerenciaOrderByFechaAsc(sugerencia);
-	}
-
-	@Override
-	public List<Comment> getCommentsByDate(Long id) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

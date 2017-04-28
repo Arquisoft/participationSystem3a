@@ -8,11 +8,10 @@ import javax.persistence.*;
 
 import pSystem.model.types.SuggestionStatus;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "TSugerencias")
 public class Suggestion implements Serializable {	
-	
-	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +26,7 @@ public class Suggestion implements Serializable {
 	private Date fecha;
 	
 	@ManyToOne
-	private User usuario;
+	private User user;
 	
 	@ManyToOne
 	private Category categoria;
@@ -40,11 +39,11 @@ public class Suggestion implements Serializable {
 	
 	Suggestion(){}
 
-	public Suggestion(String contenido, Category categoria, User usuario) {
+	public Suggestion(String contenido, Category categoria, User user) {
 		super();
 		this.contenido = contenido;
 		this.fecha = new Date();
-		this.usuario = usuario;
+		this.user = user;
 		this.categoria = categoria;
 		this.votosPositivos = 0;
 		this.votosNegativos = 0;
@@ -66,12 +65,12 @@ public class Suggestion implements Serializable {
 		return id;
 	}
 	
-	protected void _setUsuario(User usuario){
-		this.usuario = usuario;
+	protected void _setUser(User user){
+		this.user = user;
 	}
 
 	public User getUsuario() {
-		return usuario;
+		return user;
 	}
 
 	public Category getCategoria() {
@@ -124,7 +123,7 @@ public class Suggestion implements Serializable {
 		int result = 1;
 		result = prime * result + ((categoria == null) ? 0 : categoria.hashCode());
 		result = prime * result + ((contenido == null) ? 0 : contenido.hashCode());
-		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
 
@@ -147,17 +146,17 @@ public class Suggestion implements Serializable {
 				return false;
 		} else if (!contenido.equals(other.contenido))
 			return false;
-		if (usuario == null) {
-			if (other.usuario != null)
+		if (user == null) {
+			if (other.user != null)
 				return false;
-		} else if (!usuario.equals(other.usuario))
+		} else if (!user.equals(other.user))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Sugerencia [id=" + id + ", contenido=" + contenido + ", usuario=" + usuario + ", categoria=" + categoria
+		return "Sugerencia [id=" + id + ", contenido=" + contenido + ", usuario=" + user + ", categoria=" + categoria
 				+ "]";
 	}
 }

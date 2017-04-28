@@ -19,7 +19,8 @@ public class MComment implements ManageComment {
 
 	@Override
 	public List<Comment> getCommentsByDate(Long id) {
-		return commentService.getCommentsByDate(id);
+//		return commentService.getCommentsByDate(id);
+		return null;
 	}
 
 	@Override

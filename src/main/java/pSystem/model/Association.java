@@ -6,11 +6,11 @@ public class Association {
 
 		public static void link(User usuario, Citizen ciudadano) {
 			usuario._setCiudadano(ciudadano);
-			ciudadano._setUsuario(usuario);
+			ciudadano._setUser(usuario);
 		}
 
 		public static void unlink(User usuario, Citizen ciudadano) {
-			ciudadano._setUsuario(null);
+			ciudadano._setUser(null);
 			usuario._setCiudadano(null);
 		}
 	}
@@ -19,12 +19,12 @@ public class Association {
 		
 		public static void link(User usuario, Suggestion sugerencia) {
 			usuario._addSugerencia(sugerencia);
-			sugerencia._setUsuario(usuario);
+			sugerencia._setUser(usuario);
 		}
 		
 		public static void unlink(User usuario, Suggestion sugerencia) {
 			usuario._removeSugerencia(sugerencia);
-			sugerencia._setUsuario(null);
+			sugerencia._setUser(null);
 		}
 	}
 	
@@ -34,14 +34,37 @@ public class Association {
 			usuario._addComentario(comentario);
 			sugerencia.addComentario(comentario);
 			comentario._setSugerencia(sugerencia);
-			comentario._setUsuario(usuario);
+			comentario._setUser(usuario);
 		}
 		
 		public static void unlink(Comment comentario, Suggestion sugerencia, User usuario){
 			usuario._removeComentario(comentario);
 			usuario._removeSugerencia(sugerencia);
 			comentario._setSugerencia(null);
-			comentario._setUsuario(null);
+			comentario._setUser(null);
 		}
 	}
+	
+	public static class VotarComentario {
+
+		public static void link(Comment comentario, CommentVote voto, User citizen) {
+			voto._setComment(comentario);
+			voto._setUser(citizen);
+			
+			comentario.getVotos().add(voto);
+			citizen.getVotosComentarios().add(voto);
+			
+		}
+
+		public static void unlink(Comment comentario, CommentVote voto, User citizen) {
+			comentario.getVotos().remove(voto);
+			citizen.getVotosComentarios().remove(voto);
+			
+			voto._setComment(null);
+			voto._setUser(null);			
+		}
+		
+	
+
+}
 }

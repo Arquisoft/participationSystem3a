@@ -21,7 +21,7 @@ import pSystem.model.Suggestion;
 import pSystem.model.User;
 import pSystem.persistence.CategoryRepository;
 import pSystem.persistence.CommentRepository;
-import pSystem.producers.KafkaProducer;
+//import pSystem.producers.KafkaProducer;
 
 @Controller
 public class MainController {
@@ -38,8 +38,8 @@ public class MainController {
 	  @Autowired
 	  private CommentRepository CommentRepository;
 	
-	  @Autowired
-	  private KafkaProducer kafkaProducer;
+//	  @Autowired
+//	  private KafkaProducer kafkaProducer;
 	    
 	  private Suggestion seleccionada;
 
@@ -49,11 +49,11 @@ public class MainController {
         return "login";
     }
     
-    @RequestMapping("/send")
-    public String send(Model model, @ModelAttribute Message message) {
-        kafkaProducer.send("exampleTopic", message.getMessage());        
-        return "redirect:/";
-    }
+//    @RequestMapping("/send")
+//    public String send(Model model, @ModelAttribute Message message) {
+//        kafkaProducer.send("exampleTopic", message.getMessage());        
+//        return "redirect:/";
+//    }
     
     @RequestMapping(value="/login", method = RequestMethod.POST)
     public String login(HttpSession session, Model model, @RequestParam String nombre, @RequestParam String password){

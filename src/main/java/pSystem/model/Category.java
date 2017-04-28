@@ -6,53 +6,47 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name="TCategorias")
 public class Category implements Serializable {	
-	
-	private static final long serialVersionUID = 1L;
-	
+		
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String nombre;
+	private String name;
 	
 	@OneToMany(mappedBy="categoria")
-	private Set<Suggestion> sugerencias = new HashSet<>();
+	private Set<Suggestion> suggestions = new HashSet<>();
 	
 	Category(){}
 
-	public Category(String nombre) {
-		super();
-		this.nombre = nombre;
+	public Category(String name) {
+		this.name = name;
 	}
 
 	public Long getId() {
 		return id;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getName() {
+		return name;
 	}
 	
-	protected Set<Suggestion> _getSugerencias() {
-		return sugerencias;
+	protected Set<Suggestion> _getSuggestions() {
+		return suggestions;
 	}
 
-	public Set<Suggestion> getSugerencias() {
-		return new HashSet<>(sugerencias);
+	public Set<Suggestion> getSuggestions() {
+		return new HashSet<>(suggestions);
 	}
 	
-	public void addSugerencia(Suggestion sugerencia) {
-		this.sugerencias.add(sugerencia);
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -65,16 +59,16 @@ public class Category implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Category other = (Category) obj;
-		if (nombre == null) {
-			if (other.nombre != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!nombre.equals(other.nombre))
+		} else if (!name.equals(other.name))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Categoria [id=" + id + ", nombre=" + nombre + "]";
+		return "Categoria [id=" + id + ", nombre=" + name + "]";
 	}
 }

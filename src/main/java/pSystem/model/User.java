@@ -7,11 +7,10 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "TUsuarios")
 public class User implements Serializable {
-
-	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,13 +24,16 @@ public class User implements Serializable {
 	@JoinColumn(name = "CIUDADANO_ID")
 	private Citizen ciudadano;
 	
-	@OneToMany(mappedBy="usuario")
+	@OneToMany(mappedBy="user")
 	private Set<Suggestion> sugerencias = new HashSet<>();
-	@OneToMany(mappedBy="usuario")
+	
+	@OneToMany(mappedBy="user")
 	private Set<Comment> comentarios = new HashSet<>();
+	
+	@OneToMany(mappedBy="user") 
+	private Set<CommentVote> votosComentarios = new HashSet<>();
 
-	User() {
-	};
+	User() {}
 
 	public User(String usuario) {
 		this.usuario = usuario;
@@ -109,6 +111,15 @@ public class User implements Serializable {
 		comentarios.remove(comentario);
 	}
 	
+	
+	public Set<CommentVote> getVotosComentarios() {
+		return votosComentarios;
+	}
+
+	public void setVotosComentarios(Set<CommentVote> votosComentarios) {
+		this.votosComentarios = votosComentarios;
+	}
+
 	public boolean isAdmin() {
 		return isAdmin;
 	}

@@ -2,16 +2,15 @@ package pSystem.model;
 
 import java.io.Serializable;
 
-public class VotoComentarioKey implements Serializable {	
-	
-	private static final long serialVersionUID = 1L;
+@SuppressWarnings("serial")
+public class CommentVoteKey implements Serializable {	
 	
 	Long user;
 	Long comment;
 	
-	VotoComentarioKey() {}
+	CommentVoteKey() {}
 	
-	public VotoComentarioKey(Long user, Long comment) {
+	public CommentVoteKey(Long user, Long comment) {
 		this.user = user;
 		this.comment = comment;
 	}
@@ -33,7 +32,7 @@ public class VotoComentarioKey implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		VotoComentarioKey other = (VotoComentarioKey) obj;
+		CommentVoteKey other = (CommentVoteKey) obj;
 		if (user == null) {
 			if (other.user != null)
 				return false;
