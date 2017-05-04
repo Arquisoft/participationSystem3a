@@ -1,8 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1"/>
-
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Lista de sugerencias</title>
 </head>
 <body>
@@ -29,6 +27,14 @@
 		       				  <form th:action="@{/mostrar(sugerencia=${s.id})}" method="POST">
 		       				  	<button id="ver" type="submit" name="ver" th:value="${s.contenido}">
 		       				  	Mostrar
+		       				  	</button>
+		       				 
+		       				  </form>
+		       				  </td> 
+		       				  <td>
+		       				  <form th:action="@{/eliminarSugerencia(sugerencia=${s.id})}" method="POST">
+		       				  	<button id="eliminar" type="submit" name="eliminar" th:value="${s.contenido}">
+		       				  	Eliminar
 		       				  	</button>
 		       				 
 		       				  </form>

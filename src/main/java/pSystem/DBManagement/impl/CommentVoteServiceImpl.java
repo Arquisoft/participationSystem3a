@@ -26,9 +26,4 @@ public class CommentVoteServiceImpl implements CommentVoteService {
 		CommentVote votoComentario = new CommentVote(c,u,true);
 		return re.save(votoComentario);
 	}
-	
-	
-
-	
-
 }

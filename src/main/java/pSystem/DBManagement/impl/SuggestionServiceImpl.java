@@ -37,4 +37,9 @@ public class SuggestionServiceImpl implements SuggestionService {
 		return suggestionRepository.findOne(id);
 	}
 
+	@Override
+	public void deleteSuggestion(Long id) {
+		suggestionRepository.delete(id);
+	}
+
 }
