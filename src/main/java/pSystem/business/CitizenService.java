@@ -1,4 +1,4 @@
-package pSystem.DBManagement;
+package pSystem.business;
 
 public interface CitizenService {
 

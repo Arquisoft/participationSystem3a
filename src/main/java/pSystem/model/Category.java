@@ -6,21 +6,22 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-@SuppressWarnings("serial")
 @Entity
-@Table(name="TCategorias")
-public class Category implements Serializable {	
-		
+@Table(name="TCategories")
+public class Category implements Serializable {			
+	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private String name;
 	
-	@OneToMany(mappedBy="categoria")
+	@OneToMany(mappedBy="category")
 	private Set<Suggestion> suggestions = new HashSet<>();
 	
-	Category(){}
+	Category() {}
 
 	public Category(String name) {
 		this.name = name;
@@ -34,13 +35,13 @@ public class Category implements Serializable {
 		return name;
 	}
 	
-	protected Set<Suggestion> _getSuggestions() {
-		return suggestions;
-	}
-
 	public Set<Suggestion> getSuggestions() {
 		return new HashSet<>(suggestions);
 	}
+	
+	protected Set<Suggestion> _getSuggestions() {
+		return suggestions;
+	}	
 	
 	@Override
 	public int hashCode() {

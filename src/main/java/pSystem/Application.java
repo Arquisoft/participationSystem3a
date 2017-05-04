@@ -1,17 +1,20 @@
 package pSystem;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import pSystem.DBManagement.CommentService;
-import pSystem.DBManagement.CommentVoteService;
-import pSystem.DBManagement.SuggestionService;
-import pSystem.DBManagement.UserService;
+import pSystem.business.CommentService;
+import pSystem.business.CommentVoteService;
+import pSystem.business.SuggestionService;
+import pSystem.business.UserService;
 import pSystem.model.*;
 import pSystem.persistence.CategoryRepository;
+import pSystem.persistence.CommentVoteRepository;
 import pSystem.persistence.SuggestionRepository;
 
 
@@ -28,15 +31,13 @@ public class Application {
 	private SuggestionService suggestionService;
 	
 	@Autowired
-<<<<<<< HEAD
+
 	private CommentVoteService voteService;
 	
 	@Autowired
-	private VotoComentarioRepository vRepository;
+	private CommentVoteRepository vRepository;
 	
-	@Autowired
-=======
->>>>>>> f714b9ab47a0ba13c211ce8fef4fb6c51ccef081
+
 	private CategoryRepository categoryRepository;
 	
     public static void main(String[] args) {
@@ -46,17 +47,17 @@ public class Application {
     @Bean
     public CommandLineRunner iniciarBD(SuggestionRepository sR){
     	return (args) -> {
-    		User user1 = new User("user1");
-    		user1.setContraseña("user1");
+    		User user1 = new User("user1",null);
+    		user1.setPassword("user1");
     		
     		userService.addUser(user1);
     		
-<<<<<<< HEAD
 
-    		Comment c2 = commentService.addComment(c);    	
-    		
-    		
-    		voteService.vote(c2,u2,true);
+
+//    		Comment c2 = commentService.addComment(c);    	
+//    		
+//    		
+//    		voteService.vote(c2,u2,true);
 //    		
 //
 //    		
@@ -70,16 +71,15 @@ public class Application {
 //    		c1.setFecha(cal.getTime());
 //    		commentService.addComment(c1);
 //    		
-    		List<Comment> aux = commentService.findBySugerenciaOrderByFechaDesc(s);
-=======
-    		User user2 = new User("user2");
-    		user2.setContraseña("user2");
->>>>>>> f714b9ab47a0ba13c211ce8fef4fb6c51ccef081
+//    		List<Comment> aux = commentService.findBySugerenciaOrderByFechaDesc(s);
+
+    		User user2 = new User("user2", null);
+    		user2.setPassword("user2");
     		
     		userService.addUser(user2);
     		
-    		User admin = new User("admin");
-    		admin.setContraseña("admin");
+    		User admin = new User("admin", null);
+    		admin.setPassword("admin");
     		admin.setAdmin(true);
 
     		userService.addUser(admin);

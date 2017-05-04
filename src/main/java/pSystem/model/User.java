@@ -3,121 +3,104 @@ package pSystem.model;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-
-
 import javax.persistence.*;
 
-@SuppressWarnings("serial")
 @Entity
-@Table(name = "TUsuarios")
+@Table(name = "TUsers")
 public class User implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String usuario; // Clave primaria
-	private String contraseña;
+	private String username; 
+	private String password;
 	private boolean isAdmin;
 
 	@OneToOne
-	@JoinColumn(name = "CIUDADANO_ID")
-	private Citizen ciudadano;
+	@JoinColumn(name = "CITIZEN_ID")
+	private Citizen citizen;
 	
 	@OneToMany(mappedBy="user")
-	private Set<Suggestion> sugerencias = new HashSet<>();
+	private Set<Suggestion> suggestions = new HashSet<>();
 	
 	@OneToMany(mappedBy="user")
-	private Set<Comment> comentarios = new HashSet<>();
+	private Set<Comment> comments = new HashSet<>();
 	
 	@OneToMany(mappedBy="user") 
-	private Set<CommentVote> votosComentarios = new HashSet<>();
+	private Set<CommentVote> commentsVotes = new HashSet<>();
+	
+	@OneToMany(mappedBy="user") 
+	private Set<SuggestionVote> suggestionsVotes = new HashSet<>();
 
 	User() {}
 
-	public User(String usuario) {
-		this.usuario = usuario;
+	public User(String username, Citizen citizen) {
+		this.username = username;
+		this.citizen = citizen;
 	}
 
-	public User(String usuario, String contraseña, Citizen ciudadano) {
-		this(usuario);
-		this.contraseña = contraseña;
-		this.ciudadano = ciudadano;
+	public User(String username, String password, Citizen citizen) {
+		this(username, citizen);
+		this.password = password;
 	}
 
 	public Long getId() {
 		return id;
 	}
 
-	public String getUsuario() {
-		return usuario;
-	}
-
-	// No hay de usuario
-
-	public String getContraseña() {
-		return contraseña;
-	}
-
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
-	}
-
-	public Citizen getCiudadano() {
-		return ciudadano;
-	}
-
-	protected void _setCiudadano(Citizen ciudadano) {
-		this.ciudadano = ciudadano;
+	public String getUsername() {
+		return username;
 	}
 	
-	public Set<Suggestion> getSugerencias() {
-		return new HashSet<>(sugerencias);
-	}
-	
-	protected Set<Suggestion> _getSugerencias() {
-		return sugerencias;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setSugerencias(Set<Suggestion> sugerencias) {
-		this.sugerencias = sugerencias;
-	}
-	
-	public Set<Comment> getComentarios() {
-		return new HashSet<>(comentarios);
-	}
-	
-	protected Set<Comment> _getComentarios(){
-		return comentarios;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public void setComentarios(Set<Comment> comentarios) {
-		this.comentarios = comentarios;
+	public Citizen getCitizen() {
+		return citizen;
 	}
 
-	protected void _addSugerencia(Suggestion sugerencia){
-		sugerencias.add(sugerencia);
+	protected void _setCitizen(Citizen citizen) {
+		this.citizen = citizen;
 	}
 	
-	protected void _removeSugerencia(Suggestion sugerencia){
-		sugerencias.remove(sugerencia);
+	public Set<Suggestion> getSuggestions() {
+		return new HashSet<>(suggestions);
 	}
 	
-	protected void _addComentario(Comment comentario) {
-		comentarios.add(comentario);
+	protected Set<Suggestion> _getSuggestions() {
+		return suggestions;
 	}
 	
-	protected void _removeComentario(Comment comentario) {
-		comentarios.remove(comentario);
+	public Set<Comment> getCommments() {
+		return new HashSet<>(comments);
 	}
 	
-	
-	public Set<CommentVote> getVotosComentarios() {
-		return votosComentarios;
+	protected Set<Comment> _getComments(){
+		return comments;
 	}
-
-	public void setVotosComentarios(Set<CommentVote> votosComentarios) {
-		this.votosComentarios = votosComentarios;
+	
+	public Set<CommentVote> getCommentsVotes() {
+		return commentsVotes;
+	}
+	
+	protected Set<CommentVote> _getCommentsVotes() {
+		return new HashSet<>(commentsVotes);
+	}
+	
+	public Set<SuggestionVote> getSuggestionsVotes() {
+		return new HashSet<>(suggestionsVotes);
+	}
+	
+	protected Set<SuggestionVote> _getSuggestionsVotes() {
+		return suggestionsVotes;
 	}
 
 	public boolean isAdmin() {
@@ -130,14 +113,15 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Usuario [usuario=" + usuario + ", contraseña=" + contraseña + "]";
+		return "Usuario [username=" + username + ", password=" + password + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
+		result = prime * result + ((citizen == null) ? 0 : citizen.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 
@@ -150,11 +134,16 @@ public class User implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (usuario == null) {
-			if (other.usuario != null)
+		if (citizen == null) {
+			if (other.citizen != null)
 				return false;
-		} else if (!usuario.equals(other.usuario))
+		} else if (!citizen.equals(other.citizen))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
 			return false;
 		return true;
-	}
+	}	
 }

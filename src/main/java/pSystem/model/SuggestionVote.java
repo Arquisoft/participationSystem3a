@@ -13,15 +13,15 @@ import javax.persistence.Table;
 import pSystem.model.types.VoteStatus;
 
 @Entity
-@IdClass(CommentVoteKey.class)
-@Table(name="TCommentsVotes")
-public class CommentVote implements Serializable {
+@IdClass(SuggestionVoteKey.class)
+@Table(name="TSuggestionsVotes")
+public class SuggestionVote implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@ManyToOne
-	private Comment comment;
+	private Suggestion suggestion;
 	
 	@Id
 	@ManyToOne
@@ -30,21 +30,21 @@ public class CommentVote implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private VoteStatus vote;
 	
-	CommentVote() {}
+	SuggestionVote() {}
 
-	public CommentVote(Comment comment, User user,  VoteStatus vote) {		
-		this.comment = comment;
+	public SuggestionVote(Suggestion suggestion, User user, VoteStatus vote) {		
+		this.suggestion = suggestion;
 		this.user = user;
 		this.vote = vote;
-		Association.VotarComentario.link(comment, this, user);
+		Association.VotarSugerencia.link(suggestion, this, user);
 	}
 
-	public Comment getComment() {
-		return comment;
+	public Suggestion getSuggestion() {
+		return suggestion;
 	}
 
-	protected void _setComment(Comment comment) {
-		this.comment = comment;
+	protected void _setSuggestion(Suggestion suggestion) {
+		this.suggestion = suggestion;
 	}
 
 	public User getUser() {

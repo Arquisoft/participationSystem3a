@@ -4,27 +4,28 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
-@SuppressWarnings("serial")
 @Entity
-@Table(name = "TCiudadanos")
+@Table(name = "TCitizens")
 public class Citizen implements Serializable {
 		
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String nombre;
-	private String apellidos;
+	private String name;
+	private String surname;
 	private String email;
 
 	@Temporal(TemporalType.DATE)
-	private Date fechaNacimiento;
+	private Date birthday;
 
-	private String residencia;
-	private String nacionalidad;
+	private String residence;
+	private String nationality;
 	private String dni;
 
-	@OneToOne(mappedBy = "ciudadano")
+	@OneToOne(mappedBy = "citizen")
 	private User user;
 
 	Citizen() {}
@@ -33,35 +34,34 @@ public class Citizen implements Serializable {
 		this.dni = dni;
 	}
 
-	public Citizen(String nombre, String apellidos, String email, Date fechaNacimiento, String residencia,
-			String nacionalidad, String dni) {
+	public Citizen(String name, String surname, String email, Date birthday, String residence, String nationality, String dni) {
 		this(dni);
-		this.nombre = nombre;
-		this.apellidos = apellidos;
+		this.name = name;
+		this.surname = surname;
 		this.email = email;
-		this.fechaNacimiento = fechaNacimiento;
-		this.residencia = residencia;
-		this.nacionalidad = nacionalidad;
+		this.birthday = birthday;
+		this.residence = residence;
+		this.nationality = nationality;
 	}
 
 	public Long getId() {
 		return id;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getName() {
+		return name;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getApellidos() {
-		return apellidos;
+	public String getSurname() {
+		return surname;
 	}
 
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
 	public String getEmail() {
@@ -72,35 +72,33 @@ public class Citizen implements Serializable {
 		this.email = email;
 	}
 
-	public Date getFechaNacimiento() {
-		return fechaNacimiento;
+	public Date getBirthday() {
+		return birthday;
 	}
 
-	public void setFechaNacimiento(Date fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
+	public void setBirthday(Date fechaNacimiento) {
+		this.birthday = fechaNacimiento;
 	}
 
-	public String getResidencia() {
-		return residencia;
+	public String getResidence() {
+		return residence;
 	}
 
-	public void setResidencia(String residencia) {
-		this.residencia = residencia;
+	public void setResidence(String residence) {
+		this.residence = residence;
 	}
 
-	public String getNacionalidad() {
-		return nacionalidad;
+	public String getNationality() {
+		return nationality;
 	}
 
-	public void setNacionalidad(String nacionalidad) {
-		this.nacionalidad = nacionalidad;
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
 	}
 
 	public String getDni() {
 		return dni;
 	}
-
-	// No hay set de dni
 
 	public User getUser() {
 		return user;
@@ -112,8 +110,8 @@ public class Citizen implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Ciudadano [nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email + ", fechaNacimiento="
-				+ fechaNacimiento + ", residencia=" + residencia + ", nacionalidad=" + nacionalidad + ", dni=" + dni
+		return "Ciudadano [nombre=" + name + ", apellidos=" + surname + ", email=" + email + ", fechaNacimiento="
+				+ birthday + ", residencia=" + residence + ", nacionalidad=" + nationality + ", dni=" + dni
 				+ ", usuario=" + user +"]";
 	}
 

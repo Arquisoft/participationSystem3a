@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import pSystem.DBManagement.CommentService;
+import pSystem.business.CommentService;
 import pSystem.model.Comment;
 
 public class MComment implements ManageComment {

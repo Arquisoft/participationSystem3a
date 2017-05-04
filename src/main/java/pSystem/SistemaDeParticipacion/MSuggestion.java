@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import pSystem.DBManagement.SuggestionService;
+import pSystem.business.SuggestionService;
 import pSystem.model.Suggestion;
 
 public class MSuggestion implements ManageSuggestion {

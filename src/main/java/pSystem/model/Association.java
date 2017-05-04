@@ -2,69 +2,95 @@ package pSystem.model;
 
 public class Association {
 
+	/**
+	 * Relacionar User - Citizen
+	 */
 	public static class Asignar {
 
-		public static void link(User usuario, Citizen ciudadano) {
-			usuario._setCiudadano(ciudadano);
-			ciudadano._setUser(usuario);
+		public static void link(User user, Citizen citizen) {
+			user._setCitizen(citizen);
+			citizen._setUser(user);
 		}
 
-		public static void unlink(User usuario, Citizen ciudadano) {
-			ciudadano._setUser(null);
-			usuario._setCiudadano(null);
+		public static void unlink(User user, Citizen citizen) {
+			citizen._setUser(null);
+			user._setCitizen(null);
 		}
 	}
 	
+	/**
+	 * Relacionar Suggestion - User
+	 */
 	public static class AsignarSugerencia {
 		
-		public static void link(User usuario, Suggestion sugerencia) {
-			usuario._addSugerencia(sugerencia);
-			sugerencia._setUser(usuario);
+		public static void link(User user, Suggestion suggestion) {
+			user._getSuggestions().add(suggestion);
+			suggestion._setUser(user);
 		}
 		
-		public static void unlink(User usuario, Suggestion sugerencia) {
-			usuario._removeSugerencia(sugerencia);
-			sugerencia._setUser(null);
+		public static void unlink(User user, Suggestion suggestion) {
+			user._getSuggestions().remove(suggestion);
+			suggestion._setUser(null);
 		}
 	}
 	
+	/**
+	 * Relacionar Comment -  Suggestion - User
+	 */
 	public static class AsignarComentario {
 		
-		public static void link(Comment comentario, Suggestion sugerencia, User usuario){
-			usuario._addComentario(comentario);
-			sugerencia.addComentario(comentario);
-			comentario._setSugerencia(sugerencia);
-			comentario._setUser(usuario);
+		public static void link(Comment comment, Suggestion suggestion, User user){
+			user._getComments().add(comment);
+			suggestion._getComments().add(comment);
+			comment._setSuggestion(suggestion);
+			comment._setUser(user);			
 		}
 		
-		public static void unlink(Comment comentario, Suggestion sugerencia, User usuario){
-			usuario._removeComentario(comentario);
-			usuario._removeSugerencia(sugerencia);
-			comentario._setSugerencia(null);
-			comentario._setUser(null);
+		public static void unlink(Comment comment, Suggestion suggestion, User user){
+			user._getComments().remove(comment);			
+			suggestion._getComments().remove(comment);
+			comment._setSuggestion(null);
+			comment._setUser(null);			
 		}
 	}
 	
+	/**
+	 * Relacionar Commment - CommentVote - User
+	 */
 	public static class VotarComentario {
 
-		public static void link(Comment comentario, CommentVote voto, User citizen) {
-			voto._setComment(comentario);
-			voto._setUser(citizen);
-			
-			comentario.getVotos().add(voto);
-			citizen.getVotosComentarios().add(voto);
-			
+		public static void link(Comment comment, CommentVote vote, User user) {
+			vote._setComment(comment);
+			vote._setUser(user);
+			comment._getVotes().add(vote);
+			user._getCommentsVotes().add(vote);			
 		}
 
-		public static void unlink(Comment comentario, CommentVote voto, User citizen) {
-			comentario.getVotos().remove(voto);
-			citizen.getVotosComentarios().remove(voto);
-			
-			voto._setComment(null);
-			voto._setUser(null);			
+		public static void unlink(Comment comment, CommentVote vote, User user) {
+			comment._getVotes().remove(vote);
+			user._getCommentsVotes().remove(vote);
+			vote._setComment(null);
+			vote._setUser(null);			
 		}
-		
+	}
 	
+	/**
+	 * Relacionar Suggestion - SuggestionVote - User
+	 */
+	public static class VotarSugerencia {
 
-}
+		public static void link(Suggestion suggestion, SuggestionVote vote, User user) {
+			vote._setSuggestion(suggestion);		
+			vote._setUser(user);
+			suggestion._getVotes().add(vote);
+			user._getSuggestionsVotes().add(vote);			
+		}
+
+		public static void unlink(Suggestion suggestion, SuggestionVote vote, User user) {
+			suggestion._getVotes().remove(vote);
+			user._getSuggestionsVotes().remove(vote);
+			vote._setSuggestion(null);
+			vote._setUser(null);		
+		}
+	}
 }

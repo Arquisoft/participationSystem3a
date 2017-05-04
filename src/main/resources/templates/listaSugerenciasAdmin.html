@@ -11,7 +11,7 @@
 	</div>
 	
 	<div th:id="todas">
-			<table>
+			<table border="1">
 				<tr>
 					<th>Contenido</th>
 					<th></th>
@@ -24,7 +24,7 @@
 			                  <td th:text="${s.usuario.usuario}"/> 
 		       				  <td></td>
 		       				  <td>
-		       				  <form th:action="@{/mostrar(sugerencia=${s.id})}" method="POST">
+		       				  <form th:action="@{/mostrarAdmin(sugerencia=${s.id})}" method="POST">
 		       				  	<button id="ver" type="submit" name="ver" th:value="${s.contenido}">
 		       				  	Mostrar
 		       				  	</button>

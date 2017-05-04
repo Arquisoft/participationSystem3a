@@ -1,4 +1,4 @@
-package pSystem.DBManagement;
+package pSystem.business;
 
 import pSystem.model.Comment;
 import pSystem.model.CommentVote;

@@ -1,4 +1,5 @@
 package pSystem.model;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -8,121 +9,123 @@ import javax.persistence.*;
 
 import pSystem.model.types.SuggestionStatus;
 
-@SuppressWarnings("serial")
 @Entity
-@Table(name = "TSugerencias")
+@Table(name = "TSuggestions")
 public class Suggestion implements Serializable {	
+	
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String contenido;
+	private String contents;
 	
 	@Enumerated(EnumType.STRING)
-	private SuggestionStatus estado;
+	private SuggestionStatus status;
 	
 	@Temporal(TemporalType.DATE)
-	private Date fecha;
+	private Date creationDate;
+	
+	@Temporal(TemporalType.DATE)
+	private Date finalizationDate;
 	
 	@ManyToOne
 	private User user;
 	
 	@ManyToOne
-	private Category categoria;
+	private Category category;	
 	
-	private int votosPositivos;
-	private int votosNegativos;
+	@OneToMany(mappedBy="suggestion")
+	private Set<Comment> comments = new HashSet<>();
 	
-	@OneToMany(mappedBy="sugerencia")
-	private Set<Comment> comentarios = new HashSet<>();
+	@OneToMany(mappedBy="suggestion")
+	private Set<SuggestionVote> votes = new HashSet<>();
 	
-	Suggestion(){}
+	Suggestion() {}
 
-	public Suggestion(String contenido, Category categoria, User user) {
-		super();
-		this.contenido = contenido;
-		this.fecha = new Date();
+	public Suggestion(String contents, Category category, User user) {		
+		this.contents = contents;
+		this.creationDate = new Date();
 		this.user = user;
-		this.categoria = categoria;
-		this.votosPositivos = 0;
-		this.votosNegativos = 0;
-	}
-
-	public String getContenido() {
-		return contenido;
-	}
-
-	public void setContenido(String contenido) {
-		this.contenido = contenido;
+		this.category = category;	
+		this.status = SuggestionStatus.OPEN;
 	}
 	
-	public Date getFecha() {
-		return fecha;
-	}
-
 	public Long getId() {
 		return id;
+	}
+
+	public String getContents() {
+		return contents;
+	}
+
+	public void setContents(String contents) {
+		this.contents = contents;
+	}
+	
+	public Date getCreationDate() {
+		return creationDate;
+	}
+	
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+	
+	public Date getFinalizationDate() {
+		return finalizationDate;
+	}
+	
+	public void setFinalizationDatee(Date finalizationDate) {
+		this.finalizationDate = finalizationDate;
+	}
+	
+	public User getUser() {
+		return user;
 	}
 	
 	protected void _setUser(User user){
 		this.user = user;
+	}	
+
+	public Category getCategory() {
+		return category;
+	}
+	
+	protected void _setCategory(Category category){
+		this.category = category;
+	}	
+	
+	public Set<Comment> getComments() {
+		return new HashSet<>(comments);
+	}
+	
+	protected Set<Comment> _getComments() {
+		return comments;
+	}	
+
+	public SuggestionStatus getStatus() {
+		return status;
 	}
 
-	public User getUsuario() {
-		return user;
+	public void setStatus(SuggestionStatus status) {
+		this.status = status;
+	}
+	
+	public Set<SuggestionVote> getVotes() {
+		return new HashSet<>(votes);
 	}
 
-	public Category getCategoria() {
-		return categoria;
-	}
-	
-	public int getVotosPositivos() {
-		return votosPositivos;
-	}
-	
-	public int getVotosNegativos() {
-		return votosNegativos;
-	}
-	
-	protected Set<Comment> _getComentarios() {
-		return comentarios;
-	}
-	
-	public Set<Comment> getComentarios() {
-		return new HashSet<>(comentarios);
-	}
-
-	public void setComentarios(Set<Comment> comentarios) {
-		this.comentarios = comentarios;
-	}
-	
-	public void addComentario(Comment comentario){
-		comentarios.add(comentario);
-	}
-	
-	public void addVotoPositivo(){
-		this.votosPositivos++;
-	}
-	
-	public void addVotoNegativo() {
-		this.votosNegativos++;
-	}
-
-	public SuggestionStatus getEstado() {
-		return estado;
-	}
-
-	public void setEstado(SuggestionStatus estado) {
-		this.estado = estado;
+	protected Set<SuggestionVote> _getVotes() {
+		return votes;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((categoria == null) ? 0 : categoria.hashCode());
-		result = prime * result + ((contenido == null) ? 0 : contenido.hashCode());
+		result = prime * result + ((category == null) ? 0 : category.hashCode());
+		result = prime * result + ((contents == null) ? 0 : contents.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -136,15 +139,15 @@ public class Suggestion implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Suggestion other = (Suggestion) obj;
-		if (categoria == null) {
-			if (other.categoria != null)
+		if (category == null) {
+			if (other.category != null)
 				return false;
-		} else if (!categoria.equals(other.categoria))
+		} else if (!category.equals(other.category))
 			return false;
-		if (contenido == null) {
-			if (other.contenido != null)
+		if (contents == null) {
+			if (other.contents != null)
 				return false;
-		} else if (!contenido.equals(other.contenido))
+		} else if (!contents.equals(other.contents))
 			return false;
 		if (user == null) {
 			if (other.user != null)
@@ -156,7 +159,7 @@ public class Suggestion implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Sugerencia [id=" + id + ", contenido=" + contenido + ", usuario=" + user + ", categoria=" + categoria
+		return "Sugerencia [id=" + id + ", contenido=" + contents + ", usuario=" + user + ", categoria=" + category
 				+ "]";
 	}
 }

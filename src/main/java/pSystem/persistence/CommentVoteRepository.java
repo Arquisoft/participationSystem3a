@@ -7,6 +7,6 @@ import pSystem.model.CommentVote;
 import pSystem.model.CommentVoteKey;
 
 @Repository
-public interface VotoComentarioRepository extends JpaRepository<CommentVote, CommentVoteKey> {
+public interface CommentVoteRepository extends JpaRepository<CommentVote, CommentVoteKey> {
 
 }

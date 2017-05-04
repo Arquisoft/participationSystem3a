@@ -1,4 +1,4 @@
-package pSystem.DBManagement.impl;
+package pSystem.business.impl;
 
 import java.util.List;
 
@@ -6,13 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pSystem.DBManagement.CommentService;
+import pSystem.business.CommentService;
 import pSystem.model.Comment;
 import pSystem.model.Suggestion;
 import pSystem.persistence.CommentRepository;
 
 @Service
-@Transactional
 public class CommentServiceImpl implements CommentService {
 	
 	@Autowired

@@ -2,18 +2,18 @@ package pSystem.model;
 
 import java.io.Serializable;
 
-public class CommentVoteKey implements Serializable {	
+public class SuggestionVoteKey implements Serializable {	
 	
 	private static final long serialVersionUID = 1L;
 	
 	Long user;
-	Long comment;
+	Long suggestion;
 	
-	CommentVoteKey() {}
+	SuggestionVoteKey() {}
 	
-	public CommentVoteKey(Long user, Long comment) {
+	public SuggestionVoteKey(Long user, Long suggestion) {
 		this.user = user;
-		this.comment = comment;
+		this.suggestion = suggestion;
 	}
 
 	@Override
@@ -21,7 +21,7 @@ public class CommentVoteKey implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
-		result = prime * result + ((comment == null) ? 0 : comment.hashCode());
+		result = prime * result + ((suggestion == null) ? 0 : suggestion.hashCode());
 		return result;
 	}
 
@@ -33,16 +33,16 @@ public class CommentVoteKey implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CommentVoteKey other = (CommentVoteKey) obj;
+		SuggestionVoteKey other = (SuggestionVoteKey) obj;
 		if (user == null) {
 			if (other.user != null)
 				return false;
 		} else if (!user.equals(other.user))
 			return false;
-		if (comment == null) {
-			if (other.comment != null)
+		if (suggestion == null) {
+			if (other.suggestion != null)
 				return false;
-		} else if (!comment.equals(other.comment))
+		} else if (!suggestion.equals(other.suggestion))
 			return false;
 		return true;
 	}	

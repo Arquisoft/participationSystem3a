@@ -5,14 +5,14 @@
 </head>
 <body>
 	<div>
-		<form th:action="@{/listarSugerencias}" method="POST"> 
+		<form th:action="@{/listarSugerenciasAdmin}" method="POST"> 
 					<button id="listar" type="submit" name="listar">Lista de sugerencias</button>
 		</form>
 	</div>
 
 	<h1>Sugerencia seleccionada</h1>
 	<div>
-		<table>
+		<table border="1">
 			<tr>
 				<th>Contenido</th>
 				<th></th>
@@ -28,7 +28,7 @@
 	
 	<div th:id="comentarios">
 		<h2>Comentarios</h2>
-			<table>
+			<table border="1">
 				<tr>
 					<th>Contenido</th>
 					<th></th>

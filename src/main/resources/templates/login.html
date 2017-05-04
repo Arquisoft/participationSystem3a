@@ -4,17 +4,24 @@
 <title>Iniciar sesión</title>
 </head>
 <body>
-<h1>Iniciar sesión</h1>
-<form th:action="@{/login}" method="POST">
-	<div>
-	    <label for="usuario">Usuario: </label>
-	    <input type="text" id="nombre" name="nombre" placeholder="usuario"/>
-    </div>
-    <div>
-	    <label for="password">Contrasenia: </label>
-	    <input type="password" id="password" name="password" placeholder="password"/>
-    </div>
-    <button id="inicioSesionButton" type="submit">Iniciar sesion</button>
-</form>
+<h1 align="center">Iniciar sesión</h1>
+	<form th:action="@{/login}" method="POST">
+		<div align="center">
+			<table border="1">
+				<tr>
+					<td align="center"><label for="usuario">Usuario: </label></td>
+					<td align="center"><input type="text" id="nombre" name="nombre" placeholder="usuario"/></td>
+				</tr>
+				<tr>
+					<td align="center"><label for="password">Contrasenia: </label></td>
+					<td align="center"><input type="password" id="password" name="password" placeholder="password"/></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td align="center"><button id="inicioSesionButton" type="submit">Iniciar sesion</button></td>
+				</tr>
+			</table>
+		</div>
+	</form>
 </body>
 </html>

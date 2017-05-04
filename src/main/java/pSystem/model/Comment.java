@@ -7,89 +7,85 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-@SuppressWarnings("serial")
 @Entity
-@Table(name="TComentarios")
+@Table(name="TComments")
 public class Comment implements Serializable {	
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String contenido;
+	private String contents;
+	
+	@Temporal(TemporalType.DATE)
+	private Date creationDate;
 	
 	@ManyToOne
-	private Suggestion sugerencia;
+	private Suggestion suggestion;
 	
 	@ManyToOne
 	private User user;
 	
-	@Temporal(TemporalType.DATE)
-	private Date fecha;
-	
 	@OneToMany(mappedBy="comment")
-	private Set<CommentVote> votos = new HashSet<>();
+	private Set<CommentVote> votes = new HashSet<>();
 	
-	Comment(){}
+	Comment() {}
 
-	public Comment(String contenido, Suggestion sugerencia, User user) {
-		super();
-		this.contenido = contenido;
-		this.sugerencia = sugerencia;
+	public Comment(String contents, Suggestion suggestion, User user) {
+		this.contents = contents;
+		this.suggestion = suggestion;
 		this.user = user;
-		this.fecha = new Date();
-	}
-
-	public String getContenido() {
-		return contenido;
-	}
-
-	public void setContenido(String contenido) {
-		this.contenido = contenido;
+		this.creationDate = new Date();
 	}
 
 	public Long getId() {
 		return id;
 	}
 	
-	public Date getFecha(){
-		return fecha;
-	}
-
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public String getContents() {
+		return contents;
 	}
 	
-	public Suggestion getSugerencia() {
-		return sugerencia;
-	}
-	
-	protected void _setSugerencia(Suggestion sugerencia){
-		this.sugerencia = sugerencia;
+	public Date getCreationDate(){
+		return creationDate;
 	}
 
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+	
+	public Suggestion getSuggestion() {
+		return suggestion;
+	}
+	
+	protected void _setSuggestion(Suggestion suggestion){
+		this.suggestion = suggestion;
+	}
+	
 	public User getUser() {
 		return user;
 	}
 	
 	protected void _setUser(User user){
 		this.user = user;
+	}	
+
+	public Set<CommentVote> getVotes() {
+		return new HashSet<>(votes);
 	}
 
-	public Set<CommentVote> getVotos() {
-		return new HashSet<>(votos);
-	}
-
-	protected void _setVotos(Set<CommentVote> votos) {
-		this.votos = votos;
+	protected Set<CommentVote> _getVotes() {
+		return votes;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((contenido == null) ? 0 : contenido.hashCode());
-		result = prime * result + ((sugerencia == null) ? 0 : sugerencia.hashCode());
+		result = prime * result + ((contents == null) ? 0 : contents.hashCode());
+		result = prime * result + ((suggestion == null) ? 0 : suggestion.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -103,15 +99,15 @@ public class Comment implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Comment other = (Comment) obj;
-		if (contenido == null) {
-			if (other.contenido != null)
+		if (contents == null) {
+			if (other.contents != null)
 				return false;
-		} else if (!contenido.equals(other.contenido))
+		} else if (!contents.equals(other.contents))
 			return false;
-		if (sugerencia == null) {
-			if (other.sugerencia != null)
+		if (suggestion == null) {
+			if (other.suggestion != null)
 				return false;
-		} else if (!sugerencia.equals(other.sugerencia))
+		} else if (!suggestion.equals(other.suggestion))
 			return false;
 		if (user == null) {
 			if (other.user != null)
@@ -123,7 +119,7 @@ public class Comment implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Comentario [id=" + id + ", contenido=" + contenido + ", sugerencia=" + sugerencia + ", usuario="
+		return "Comentario [id=" + id + ", contenido=" + contents + ", sugerencia=" + suggestion + ", usuario="
 				+ user + "]";
 	};
 }
