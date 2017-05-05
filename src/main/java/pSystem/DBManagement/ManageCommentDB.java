@@ -1,10 +1,10 @@
-package pSystem.SistemaDeParticipacion;
+package pSystem.DBManagement;
 
 import java.util.List;
 
 import pSystem.model.Comment;
 
-public interface ManageComment {
+public interface ManageCommentDB {
 	
 	public Comment addComment(Comment comentario);
 	public void deleteComment(Long id);

@@ -11,33 +11,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import pSystem.business.SuggestionService;
+import pSystem.SistemaDeParticipacion.ManageComment;
+import pSystem.SistemaDeParticipacion.ManageSuggestion;
 import pSystem.model.Category;
 import pSystem.model.Comment;
 import pSystem.model.Suggestion;
 import pSystem.model.User;
-import pSystem.persistence.CategoryRepository;
-import pSystem.persistence.CommentRepository;
 import pSystem.util.Util;
 
 @Controller
 public class UserController {
 
 	@Autowired
-	private SuggestionService suggestionService;
+	private ManageSuggestion manageSuggestion;
 
 	@Autowired
-	private CategoryRepository categoryRepository;
-
-	@Autowired
-	private CommentRepository CommentRepository;
-	
-	private Util util = new Util();
+	private ManageComment manageComment;
 	
 	@RequestMapping(value = "/mostrar", method = RequestMethod.POST)
 	public String mostrarSugerencia(HttpSession session, Model model, @RequestParam("sugerencia") Long id) {
-		Suggestion sugerencia = suggestionService.getSuggestion(id);
-		util.setSeleccionada(sugerencia);
+		Suggestion sugerencia = manageSuggestion.getSuggestion(id);
+		Util.setSeleccionada(sugerencia);
 		if (sugerencia != null) {
 			model.addAttribute("seleccionada", sugerencia);
 			return "mostrarSugerencia";
@@ -52,30 +46,30 @@ public class UserController {
 
 	@RequestMapping(value = "/anadirSugerencia", method = RequestMethod.POST)
 	public String añadirSugerencia(HttpSession session, Model model, @RequestParam String contenido) {
-		List<Category> categorias = categoryRepository.findAll();
+		List<Category> categorias = manageSuggestion.findSuggestionCategories();
 		Suggestion suggestion = new Suggestion(contenido, categorias.get(0), (User) session.getAttribute("user"));
-		suggestionService.addSuggestion(suggestion);
-		util.cargarSugerencias(model, suggestionService);
+		manageSuggestion.addSuggestion(suggestion);
+		Util.cargarSugerencias(model);
 		return "listaSugerencias";
 	}	
 
 	@RequestMapping("/nuevoComentario")
 	public String nuevoComentario(@RequestParam("sugerencia") Suggestion sugerencia) {
-		util.setSeleccionada(sugerencia);
+		Util.setSeleccionada(sugerencia);
 		return "añadirComentario";
 	}
 
 	@RequestMapping(value = "/anadirComentario", method = RequestMethod.POST)
 	public String añadirComentario(HttpSession session, Model model, @RequestParam String contenido) {
-		Comment comentario = new Comment(contenido, util.getSeleccionada(), (User) session.getAttribute("user"));
-		CommentRepository.save(comentario);
-		model.addAttribute("seleccionada", suggestionService.getSuggestion(util.getSeleccionada().getId()));
+		Comment comentario = new Comment(contenido, Util.getSeleccionada(), (User) session.getAttribute("user"));
+		manageComment.addComment(comentario);
+		model.addAttribute("seleccionada", manageSuggestion.getSuggestion(Util.getSeleccionada().getId()));
 		return "mostrarSugerencia";
 	}
 	
 	@RequestMapping(value = "/listarSugerencias", method = RequestMethod.POST)
 	public String irALista(Model model) {
-		util.cargarSugerencias(model, suggestionService);
+		Util.cargarSugerencias(model);
 		return "listaSugerencias";
 	}
 }

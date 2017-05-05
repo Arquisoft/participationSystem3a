@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import pSystem.business.SuggestionService;
-import pSystem.business.UserService;
+import pSystem.SistemaDeParticipacion.ManageUser;
 import pSystem.model.User;
 import pSystem.producers.KafkaProducer;
 import pSystem.util.Util;
@@ -20,15 +19,10 @@ import pSystem.util.Util;
 public class MainController {
 
 	@Autowired
-	private UserService userService;
-
-	@Autowired
-	private SuggestionService suggestionService;
+	private ManageUser manageUser;
 
 	@Autowired
 	private KafkaProducer kafkaProducer;
-	
-	private Util util = new Util();
 
 	@RequestMapping("/")
 	public String landing(Model model) {
@@ -44,10 +38,10 @@ public class MainController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(HttpSession session, Model model, @RequestParam String nombre, @RequestParam String password) {
-		User userLogin = userService.findByUserAndPassword(nombre, password);
+		User userLogin = manageUser.findByUserAndPassword(nombre, password);
 		if (userLogin != null) {
 			session.setAttribute("user", userLogin);
-			util.cargarSugerencias(model, suggestionService);
+			Util.cargarSugerencias(model);
 			if (userLogin.isAdmin()) {
 				return "listaSugerenciasAdmin";
 			} else {

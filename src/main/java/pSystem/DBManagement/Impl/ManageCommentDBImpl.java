@@ -1,25 +1,32 @@
-package pSystem.SistemaDeParticipacion;
+package pSystem.DBManagement.Impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import pSystem.DBManagement.ManageCommentDB;
 import pSystem.business.CommentService;
 import pSystem.model.Comment;
 
-public class MComment implements ManageComment {
+@Service
+public class ManageCommentDBImpl implements ManageCommentDB {
 	
 	@Autowired
 	private CommentService commentService;
 
 	@Override
-	public void addComment(Comment comentario) {
-		commentService.addComment(comentario);
+	public Comment addComment(Comment comentario) {
+		return commentService.addComment(comentario);
+	}
+
+	@Override
+	public void deleteComment(Long id) {
+		commentService.deleteComment(id);
 	}
 
 	@Override
 	public List<Comment> getCommentsByDate(Long id) {
-//		return commentService.getCommentsByDate(id);
 		return null;
 	}
 

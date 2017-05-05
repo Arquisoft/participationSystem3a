@@ -1,4 +1,4 @@
-package pSystem.SistemaDeParticipacion;
+package pSystem.DBManagement;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import pSystem.model.Category;
 import pSystem.model.RestringedWords;
 import pSystem.model.Suggestion;
 
-public interface ManageSuggestion {
+public interface ManageSuggestionDB {
 	
-	public Suggestion addSuggestion(Suggestion sugerencia);
+	public Suggestion addSuggestion(Suggestion suggestion);
 	public void updateSuggestion(Suggestion sugerencia);
 	public void deleteSuggestion(Long id);
 	public Suggestion getSuggestion(Long id);

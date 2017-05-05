@@ -2,25 +2,29 @@ package pSystem.util;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
-import pSystem.business.SuggestionService;
+import pSystem.SistemaDeParticipacion.ManageSuggestion;
 import pSystem.model.Suggestion;
 
 public class Util {
 	
-	private Suggestion seleccionada;
+	@Autowired
+	private static ManageSuggestion manageSuggestion;
 	
-	public void cargarSugerencias(Model model, SuggestionService suggestionService) {
-		List<Suggestion> sugerencias = suggestionService.getSuggestions();
+	private static Suggestion seleccionada;
+	
+	public static void cargarSugerencias(Model model) {
+		List<Suggestion> sugerencias = manageSuggestion.getSuggestions();
 		model.addAttribute("sugerencias", sugerencias);
 	}
 
-	public Suggestion getSeleccionada() {
+	public static Suggestion getSeleccionada() {
 		return seleccionada;
 	}
 
-	public void setSeleccionada(Suggestion seleccionada) {
-		this.seleccionada = seleccionada;
+	public static void setSeleccionada(Suggestion seleccionada) {
+		Util.seleccionada = seleccionada;
 	}
 }
