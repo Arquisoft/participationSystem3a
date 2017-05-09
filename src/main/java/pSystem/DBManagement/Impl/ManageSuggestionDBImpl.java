@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pSystem.DBManagement.ManageSuggestionDB;
+import pSystem.Mensajeria.KafkaProducer;
 import pSystem.business.CategoryService;
 import pSystem.business.RestringedWordsService;
 import pSystem.business.SuggestionService;
@@ -21,6 +22,9 @@ import pSystem.model.types.VoteStatus;
 public class ManageSuggestionDBImpl implements ManageSuggestionDB {
 	
 	@Autowired
+	private KafkaProducer producer;
+	
+	@Autowired
 	private SuggestionService suggestionService;
 	
 	@Autowired
@@ -34,7 +38,9 @@ public class ManageSuggestionDBImpl implements ManageSuggestionDB {
 
 	@Override
 	public Suggestion addSuggestion(Suggestion suggestion) {
-		return suggestionService.addSuggestion(suggestion);
+		Suggestion sugerencia = suggestionService.addSuggestion(suggestion);
+		producer.sendSugerencia(sugerencia);
+		return sugerencia;
 	}
 
 	@Override
@@ -69,6 +75,7 @@ public class ManageSuggestionDBImpl implements ManageSuggestionDB {
 
 	@Override
 	public SuggestionVote voteSuggestion(Suggestion suggestion, User user, VoteStatus vote) {
+		System.out.println(vote);
 		return voteService.addSuggestionVote(suggestion, user, vote);
 	}
 

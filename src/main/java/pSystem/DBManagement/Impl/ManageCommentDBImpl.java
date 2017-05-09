@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pSystem.DBManagement.ManageCommentDB;
+import pSystem.Mensajeria.KafkaProducer;
 import pSystem.business.CommentService;
 import pSystem.model.Comment;
 import pSystem.model.Suggestion;
@@ -14,11 +15,16 @@ import pSystem.model.Suggestion;
 public class ManageCommentDBImpl implements ManageCommentDB {
 	
 	@Autowired
+	private KafkaProducer producer;
+	
+	@Autowired
 	private CommentService commentService;
 
 	@Override
 	public Comment addComment(Comment comentario) {
-		return commentService.addComment(comentario);
+		Comment comment = commentService.addComment(comentario);
+		producer.sendComentario(comment);
+		return comment;
 	}
 
 	@Override

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import pSystem.Mensajeria.KafkaProducer;
+import pSystem.Mensajeria.impl.KafkaProducerImpl;
 import pSystem.SistemaDeParticipacion.ManageCitizen;
 import pSystem.SistemaDeParticipacion.ManageSuggestion;
 import pSystem.model.Suggestion;
@@ -28,7 +28,7 @@ public class MainController {
 	private ManageSuggestion manageSuggestion;
 
 	@Autowired
-	private KafkaProducer kafkaProducer;
+	private KafkaProducerImpl kafkaProducer;
 
 	@RequestMapping("/")
 	public String landing(Model model) {

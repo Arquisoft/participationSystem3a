@@ -26,7 +26,9 @@ public class SuggestionVoteImpl implements SuggestionVoteService {
 	public SuggestionVote addSuggestionVote(Suggestion suggestion, User user, VoteStatus vote) {
 		Suggestion auxS = jpaContext.getEntityManagerByManagedType(Suggestion.class).merge(suggestion);
 		User auxU = jpaContext.getEntityManagerByManagedType(User.class).merge(user);
+		System.out.println("BD " + vote);
 		SuggestionVote suggestionVote = new SuggestionVote(auxS, auxU, vote);
+		System.out.println(suggestionVote.getVote());
 		return suggestionVoteRepository.save(suggestionVote);
 	}
 	
