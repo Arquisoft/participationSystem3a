@@ -38,6 +38,7 @@ public class UserController {
 		setSeleccionada(sugerencia);
 		if (sugerencia != null) {
 			model.addAttribute("seleccionada", sugerencia);
+			model.addAttribute("comentarios", sugerencia.getComments());
 			return "mostrarSugerencia";
 		}
 		return "listaSugerencias";
@@ -115,6 +116,14 @@ public class UserController {
 		List<Suggestion> sugerencias = manageSuggestion.getSuggestions();
 		model.addAttribute("sugerencias", sugerencias);
 		return "listaSugerencias";
+	}
+	
+	@RequestMapping(value = "/ordenarPorFecha", method = RequestMethod.POST)
+	public String ordenarPorFecha(Model model){
+		List<Comment> comments = manageComment.getCommentsByDate(seleccionada);
+		model.addAttribute("comentarios", comments);
+		model.addAttribute("seleccionada", seleccionada);
+		return "mostrarSugerencia";
 	}
 
 	public Suggestion getSeleccionada() {

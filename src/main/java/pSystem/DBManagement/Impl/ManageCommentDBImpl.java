@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import pSystem.DBManagement.ManageCommentDB;
 import pSystem.business.CommentService;
 import pSystem.model.Comment;
+import pSystem.model.Suggestion;
 
 @Service
 public class ManageCommentDBImpl implements ManageCommentDB {
@@ -26,12 +27,12 @@ public class ManageCommentDBImpl implements ManageCommentDB {
 	}
 
 	@Override
-	public List<Comment> getCommentsByDate(Long id) {
-		return null;
+	public List<Comment> getCommentsByDate(Suggestion suggestion) {
+		return commentService.findBySuggestionOrderByCreationDateDesc(suggestion);
 	}
 
 	@Override
-	public List<Comment> getCommentsByPopularity(Long id) {
+	public List<Comment> getCommentsByPopularity(Suggestion suggestion) {
 		return commentService.orderByPopularity();
 	}
 

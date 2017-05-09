@@ -35,6 +35,7 @@ public class CouncilController {
 		setSeleccionada(sugerencia);
 		if (sugerencia != null) {
 			model.addAttribute("seleccionada", sugerencia);
+			model.addAttribute("comentarios", sugerencia.getComments());
 			return "mostrarSugerenciaAdmin";
 		}
 		return "listaSugerenciasAdmin";
@@ -77,6 +78,14 @@ public class CouncilController {
 		List<Suggestion> sugerencias = manageSuggestion.getSuggestions();
 		model.addAttribute("sugerencias", sugerencias);
 		return "listaSugerenciasAdmin";
+	}
+	
+	@RequestMapping(value = "/ordenarPorFechaAdmin", method = RequestMethod.POST)
+	public String ordenarPorFecha(Model model){
+		List<Comment> comments = manageComment.getCommentsByDate(seleccionada);
+		model.addAttribute("comentarios", comments);
+		model.addAttribute("seleccionada", seleccionada);
+		return "mostrarSugerenciaAdmin";
 	}
 
 	public Suggestion getSeleccionada() {
