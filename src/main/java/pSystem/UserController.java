@@ -51,19 +51,9 @@ public class UserController {
 
 	@RequestMapping(value = "/anadirSugerencia", method = RequestMethod.POST)
 	public String añadirSugerencia(HttpSession session, Model model, @RequestParam String contenido) {
-		List<RestringedWords> prohibidas = manageSuggestion.findSuggestionRestringedWords();
-		boolean contiene=false;
-		for(RestringedWords r: prohibidas){
-			if(contenido.toUpperCase().contains(r.getWord().toUpperCase())){
-				contiene=true;
-				break;
-			}
-		}
-		if(!contiene){
-			List<Category> categorias = manageSuggestion.findSuggestionCategories();
-			Suggestion suggestion = new Suggestion(contenido, categorias.get(0), (User) session.getAttribute("user"));
-			manageSuggestion.addSuggestion(suggestion);
-		}
+		List<Category> categorias = manageSuggestion.findSuggestionCategories();
+		Suggestion suggestion = new Suggestion(contenido, categorias.get(0), (User) session.getAttribute("user"));
+		manageSuggestion.addSuggestion(suggestion);
 		List<Suggestion> sugerencias = manageSuggestion.getSuggestions();
 		model.addAttribute("sugerencias", sugerencias);
 		return "listaSugerencias";

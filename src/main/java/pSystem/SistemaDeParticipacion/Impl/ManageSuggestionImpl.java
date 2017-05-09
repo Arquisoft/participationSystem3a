@@ -22,7 +22,18 @@ public class ManageSuggestionImpl implements ManageSuggestion {
 
 	@Override
 	public Suggestion addSuggestion(Suggestion sugerencia) {
-		return manageSuggestionDB.addSuggestion(sugerencia);
+		List<RestringedWords> prohibidas = findSuggestionRestringedWords();
+		boolean contiene=false;
+		for(RestringedWords r: prohibidas){
+			if(sugerencia.getContents().toUpperCase().contains(r.getWord().toUpperCase())){
+				contiene=true;
+				break;
+			}
+		}
+		if(!contiene){
+			return manageSuggestionDB.addSuggestion(sugerencia);
+		}
+		return null;
 	}
 
 	@Override
