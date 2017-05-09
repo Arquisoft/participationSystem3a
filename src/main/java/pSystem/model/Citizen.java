@@ -108,11 +108,12 @@ public class Citizen implements Serializable {
 		this.user = user;
 	}
 
+	
+
 	@Override
 	public String toString() {
-		return "Ciudadano [nombre=" + name + ", apellidos=" + surname + ", email=" + email + ", fechaNacimiento="
-				+ birthday + ", residencia=" + residence + ", nacionalidad=" + nationality + ", dni=" + dni
-				+ ", usuario=" + user +"]";
+		return "Citizen [name=" + name + ", surname=" + surname + ", email=" + email + ", birthday=" + birthday
+				+ ", residence=" + residence + ", nationality=" + nationality + ", dni=" + dni + ", user=" + user + "]";
 	}
 
 	@Override
@@ -139,4 +140,5 @@ public class Citizen implements Serializable {
 			return false;
 		return true;
 	}
+	
 }

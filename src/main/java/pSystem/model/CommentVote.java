@@ -10,6 +10,8 @@ import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import pSystem.model.types.VoteStatus;
 
 @Entity
@@ -21,10 +23,12 @@ public class CommentVote implements Serializable {
 
 	@Id
 	@ManyToOne
+	@JsonBackReference(value = "comment-commentvotes")
 	private Comment comment;
 	
 	@Id
 	@ManyToOne
+	@JsonBackReference(value = "user-commentvotes")
 	private User user;
 	
 	@Enumerated(EnumType.STRING)
@@ -33,9 +37,7 @@ public class CommentVote implements Serializable {
 	CommentVote() {}
 
 	public CommentVote(Comment comment, User user,  VoteStatus vote) {		
-		this.comment = comment;
-		this.user = user;
-		this.vote = vote;
+		super();
 		Association.VotarComentario.link(comment, this, user);
 	}
 
@@ -62,4 +64,5 @@ public class CommentVote implements Serializable {
 	public void setVote(VoteStatus vote) {
 		this.vote = vote;
 	}
+	
 }

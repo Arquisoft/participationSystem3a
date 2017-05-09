@@ -16,26 +16,26 @@
 				<th>Contenido</th>
 				<th></th>
 				<th>Usuario</th>
-				<th>Apoyar</th>
-				<th>Rechazar</th>
+				<th>Apoyos</th>
+				<th>Rechazos</th>
 			</tr>
 			<tr>	
-		        <td th:text="${seleccionada.contenido}"/>
+		        <td th:text="${seleccionada.contents}" align="center"/>
 		        <td/>
-		        <td th:text="${seleccionada.usuario.usuario}"/>
-		        <td>aaa</td>
-		        <td>bbbb</td>      				 
+		        <td th:text="${seleccionada.user.username}" align="center"/>
+		        <td th:text="${seleccionada.getPositiveVotes()}" align="center"/>
+		        <td th:text="${seleccionada.getNegativeVotes()}" align="center"/>    				 
 			</tr>
 			<tr>
 				<td/><td/><td/>
 				<td align="center">
-    				<form th:action="@{/mostrar(sugerencia=${seleccionada.id})}" method="POST">
-    					<button id="mas" type="submit" name="mas" th:value="${seleccionada.contenido}">+</button>
+    				<form th:action="@{/votarSugerencia(voto=${positivo})}" method="POST">
+    					<button id="mas" type="submit" name="mas" th:value="${seleccionada.contents}">+</button>
     				</form>
     		    </td> 
       			<td align="center">
-      				<form th:action="@{/mostrar(sugerencia=${seleccionada.id})}" method="POST">
-      					<button id="menos" type="submit" name="menos" th:value="${seleccionada.contenido}">-</button>
+      				<form th:action="@{/votarSugerencia(voto=${negativo})}" method="POST">
+      					<button id="menos" type="submit" name="menos" th:value="${seleccionada.contents}">-</button>
       				</form>
       			</td> 
 			</tr> 
@@ -55,10 +55,10 @@
 					<th></th>
 					<th>Usuario</th>
 				</tr>
-				<tr th:each="c : ${seleccionada.comentarios}">	
-			        <td th:text="${c.contenido}"></td>
+				<tr th:each="c : ${seleccionada.comments}">	
+			        <td th:text="${c.contents}" align="center"/>
 			        <td></td>
-		       		<td th:text="${c.usuario.usuario}"></td>
+		       		<td th:text="${c.user.username}" align="center"/>
 		       		<td></td>
 				</tr>
 			</table>

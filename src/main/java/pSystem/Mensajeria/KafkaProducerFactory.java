@@ -1,4 +1,4 @@
-package pSystem.producers;
+package pSystem.Mensajeria;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;

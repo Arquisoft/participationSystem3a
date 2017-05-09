@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pSystem.DBManagement.ManageUserDB;
-import pSystem.SistemaDeParticipacion.ManageUser;
+import pSystem.SistemaDeParticipacion.ManageCitizen;
 import pSystem.model.User;
 
 @Service
-public class ManageUserImpl implements ManageUser {
+public class ManageCitizenImpl implements ManageCitizen {
 	
 	@Autowired
 	private ManageUserDB manageUserDB;

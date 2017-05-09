@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="TCategories")
 public class Category implements Serializable {			
@@ -18,8 +20,9 @@ public class Category implements Serializable {
 	
 	private String name;
 	
-	@OneToMany(mappedBy="category")
-	private Set<Suggestion> suggestions = new HashSet<>();
+	@OneToMany(mappedBy="category", cascade = CascadeType.PERSIST)
+	@JsonManagedReference(value = "category-suggestions")
+	private Set<Suggestion> suggestions = new HashSet<Suggestion>();
 	
 	Category() {}
 
@@ -36,13 +39,19 @@ public class Category implements Serializable {
 	}
 	
 	public Set<Suggestion> getSuggestions() {
-		return new HashSet<>(suggestions);
+		return new HashSet<Suggestion>(suggestions);
 	}
 	
 	protected Set<Suggestion> _getSuggestions() {
 		return suggestions;
 	}	
 	
+	
+	@Override
+	public String toString() {
+		return "Category [name=" + name + "]";
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -66,10 +75,5 @@ public class Category implements Serializable {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Categoria [id=" + id + ", nombre=" + name + "]";
 	}
 }

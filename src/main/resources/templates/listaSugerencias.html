@@ -25,17 +25,17 @@
 					<th></th>
 				</tr>
 				<tr th:each="s : ${sugerencias}">	
-			                  <td th:text="${s.contenido}"></td>
+			                  <td th:text="${s.contents}" align="center"/>
 			                  <td></td>
-			                  <td th:text="${s.usuario.usuario}"/> 
+			                  <td th:text="${s.user.username}" align="center"/> 
 		       				  <td></td>
-		       				  <td>
-		       				  <form th:action="@{/mostrar(sugerencia=${s.id})}" method="POST">
-		       				  	<button id="ver" type="submit" name="ver" th:value="${s.contenido}">
-		       				  	Mostrar
-		       				  	</button>
-		       				 
-		       				  </form>
+		       				  <td align="center">
+			       				  <form th:action="@{/mostrar(sugerencia=${s.id})}" method="POST">
+			       				  	<button id="ver" type="submit" name="ver" th:value="${s.contents}">
+			       				  	Mostrar
+			       				  	</button>
+			       				 
+			       				  </form>
 		       				  </td> 
 				</tr>
 			</table>

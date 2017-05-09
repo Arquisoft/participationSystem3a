@@ -22,7 +22,7 @@ public class ManageCommentDBImpl implements ManageCommentDB {
 
 	@Override
 	public void deleteComment(Long id) {
-		commentService.deleteComment(id);
+		commentService.deleteByIdComment(id);
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class ManageCommentDBImpl implements ManageCommentDB {
 
 	@Override
 	public List<Comment> getCommentsByPopularity(Long id) {
-		return commentService.getCommentsByPopularity(id);
+		return commentService.orderByPopularity();
 	}
 
 }

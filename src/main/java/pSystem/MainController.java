@@ -1,5 +1,7 @@
 package pSystem;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import pSystem.SistemaDeParticipacion.ManageUser;
+import pSystem.Mensajeria.KafkaProducer;
+import pSystem.SistemaDeParticipacion.ManageCitizen;
+import pSystem.SistemaDeParticipacion.ManageSuggestion;
+import pSystem.model.Suggestion;
 import pSystem.model.User;
-import pSystem.producers.KafkaProducer;
-import pSystem.util.Util;
 
 @Controller
 public class MainController {
 
 	@Autowired
-	private ManageUser manageUser;
+	private ManageCitizen manageUser;
+	
+	@Autowired
+	private ManageSuggestion manageSuggestion;
 
 	@Autowired
 	private KafkaProducer kafkaProducer;
@@ -41,7 +47,8 @@ public class MainController {
 		User userLogin = manageUser.findByUserAndPassword(nombre, password);
 		if (userLogin != null) {
 			session.setAttribute("user", userLogin);
-			Util.cargarSugerencias(model);
+			List<Suggestion> sugerencias = manageSuggestion.getSuggestions();
+			model.addAttribute("sugerencias", sugerencias);
 			if (userLogin.isAdmin()) {
 				return "listaSugerenciasAdmin";
 			} else {

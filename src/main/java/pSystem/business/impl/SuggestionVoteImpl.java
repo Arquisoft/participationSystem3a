@@ -1,48 +1,33 @@
 package pSystem.business.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaContext;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import pSystem.business.SuggestionService;
+import pSystem.business.SuggestionVoteService;
 import pSystem.model.Suggestion;
-import pSystem.persistence.SuggestionRepository;
+import pSystem.model.SuggestionVote;
+import pSystem.model.User;
+import pSystem.model.types.VoteStatus;
+import pSystem.persistence.SuggestionVoteRepository;
 
 @Service
-public class SuggestionVoteImpl implements SuggestionService {
+@Transactional
+public class SuggestionVoteImpl implements SuggestionVoteService {
 
 	@Autowired
-	private SuggestionRepository sRepository;
+	private SuggestionVoteRepository suggestionVoteRepository;
+	
+	@Autowired
+	private JpaContext jpaContext;
 	
 	@Override
-	public Suggestion addSuggestion(Suggestion sugerencia) {
-		// TODO Auto-generated method stub
-		return null;
+	public SuggestionVote addSuggestionVote(Suggestion suggestion, User user, VoteStatus vote) {
+		Suggestion auxS = jpaContext.getEntityManagerByManagedType(Suggestion.class).merge(suggestion);
+		User auxU = jpaContext.getEntityManagerByManagedType(User.class).merge(user);
+		SuggestionVote suggestionVote = new SuggestionVote(auxS, auxU, vote);
+		return suggestionVoteRepository.save(suggestionVote);
 	}
-
-	@Override
-	public void updateSuggestion(Suggestion sugerencia) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<Suggestion> getSuggestions() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Suggestion getSuggestion(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deleteSuggestion(Long id) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 }

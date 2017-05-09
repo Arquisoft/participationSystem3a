@@ -20,7 +20,7 @@ public class ManageUserDBImpl implements ManageUserDB {
 
 	@Override
 	public User findByUserAndPassword(String usuario, String contraseña) {
-		return userService.findByUserAndPassword(usuario, contraseña);
+		return userService.findByUsernameAndPassword(usuario, contraseña);
 	}
 
 }

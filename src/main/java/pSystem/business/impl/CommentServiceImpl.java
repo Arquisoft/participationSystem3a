@@ -17,28 +17,45 @@ public class CommentServiceImpl implements CommentService {
 	private CommentRepository commentRepository;
 
 	@Override
-	public Comment addComment(Comment comentario) {
-		return commentRepository.save(comentario);
+	public Comment addComment(Comment comment) {
+		return commentRepository.save(comment);
 	}
 
 	@Override
-	public void deleteComment(Long id) {
-		commentRepository.delete(id);
+	public void deleteComment(Comment comment) {
+		commentRepository.delete(comment);
 	}
-	
+
 	@Override
-	public List<Comment> getCommentsByPopularity(Long id) {
+	public void updateComment(Comment comment) {
+		commentRepository.save(comment);
+	}
+
+	@Override
+	public Comment findComment(Long commentId) {
+		return commentRepository.findOne(commentId);
+	}
+
+	@Override
+	public void deleteByIdComment(Long commentId) {
+		commentRepository.delete(commentId);
+	}
+
+	@Override
+	public List<Comment> orderByPopularity() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Comment> findBySugerenciaOrderByFechaDesc(Suggestion sugerencia) {
-		return commentRepository.findBySugerenciaOrderByFechaDesc(sugerencia);
+	public List<Comment> findBySuggestionOrderByCreationDateDesc(Suggestion suggestion) {
+		return commentRepository.findBySuggestionOrderByCreationDateDesc(suggestion);
 	}
 
 	@Override
-	public List<Comment> findBySugerenciaOrderByFechaAsc(Suggestion sugerencia) {
-		return commentRepository.findBySugerenciaOrderByFechaAsc(sugerencia);
+	public List<Comment> findBySuggestionOrderByCreationDateAsc(Suggestion suggestion) {
+		return commentRepository.findBySuggestionOrderByCreationDateAsc(suggestion);
 	}
+
+		
 }

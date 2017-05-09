@@ -7,7 +7,11 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import pSystem.model.types.SuggestionStatus;
+import pSystem.model.types.VoteStatus;
 
 @Entity
 @Table(name = "TSuggestions")
@@ -30,17 +34,36 @@ public class Suggestion implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date finalizationDate;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JsonBackReference(value = "user-suggestions")
 	private User user;
 	
 	@ManyToOne
+	@JsonBackReference(value = "category-suggestions")
 	private Category category;	
 	
-	@OneToMany(mappedBy="suggestion")
-	private Set<Comment> comments = new HashSet<>();
+	@OneToMany(mappedBy="suggestion", fetch = FetchType.EAGER)
+	@JsonManagedReference(value = "suggestion-comments")
+	private Set<Comment> comments = new HashSet<Comment>();
 	
-	@OneToMany(mappedBy="suggestion")
-	private Set<SuggestionVote> votes = new HashSet<>();
+	@OneToMany(mappedBy="suggestion", fetch = FetchType.EAGER)
+	@JsonManagedReference(value = "suggestion-suggestionvotes")
+	private Set<SuggestionVote> votes = new HashSet<SuggestionVote>();
+	
+	@Transient
+	private double rating;
+	
+	@Transient
+	private int positiveVotes;
+	
+	@Transient
+	private int negativeVotes;
+	
+	@Transient
+	private int totalVotes;
+	
+	@Transient
+	private int numComments;
 	
 	Suggestion() {}
 
@@ -97,7 +120,7 @@ public class Suggestion implements Serializable {
 	}	
 	
 	public Set<Comment> getComments() {
-		return new HashSet<>(comments);
+		return new HashSet<Comment>(comments);
 	}
 	
 	protected Set<Comment> _getComments() {
@@ -113,13 +136,69 @@ public class Suggestion implements Serializable {
 	}
 	
 	public Set<SuggestionVote> getVotes() {
-		return new HashSet<>(votes);
+		return new HashSet<SuggestionVote>(votes);
 	}
 
 	protected Set<SuggestionVote> _getVotes() {
 		return votes;
 	}
+	
+	public double getRating() {
+		int positiveVotes = getPositiveVotes();
+		int votes = positiveVotes + getNegativeVotes();
+		if(votes == 0)
+			rating = 0;
+		else
+			rating = positiveVotes/(double)votes;
+		return rating;
+	}
+	
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+	
+	public int getPositiveVotes() {
+		positiveVotes = (int) votes.stream().filter(v -> v.getVote() == VoteStatus.IN_FAVOUR).count();
+		return positiveVotes;
+	}
+	
+	public void setPositiveVotes(int positiveVotes) {
+		this.positiveVotes = positiveVotes;
+	}
+	
+	public int getNegativeVotes() {
+		negativeVotes = (int) votes.stream().filter(v -> v.getVote() == VoteStatus.AGAINST).count();
+		return negativeVotes;
+	}
+	
+	public void setNegativeVotes(int negativeVotes) {
+		this.negativeVotes = negativeVotes;
+	}
+	
+	public int getTotalVotes() {
+		totalVotes = getPositiveVotes() + getNegativeVotes();
+		return totalVotes;
+	}
+	
+	public void setTotalVotes(int totalVotes) {
+		this.totalVotes = totalVotes;
+	}
+	
+	public int getNumComments() {
+		numComments = comments.size();
+		return numComments;
+	}
+	
+	public void setNumComments(int numComments) {
+		this.numComments = numComments;
+	}
 
+	@Override
+	public String toString() {
+		return "Suggestion [id=" + id + ", contents=" + contents + ", user=" + user + ", category=" + category
+				+ "]";
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -156,10 +235,5 @@ public class Suggestion implements Serializable {
 			return false;
 		return true;
 	}
-
-	@Override
-	public String toString() {
-		return "Sugerencia [id=" + id + ", contenido=" + contents + ", usuario=" + user + ", categoria=" + category
-				+ "]";
-	}
+	
 }

@@ -1,7 +1,5 @@
 package pSystem;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -9,12 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import pSystem.business.CommentService;
-import pSystem.business.CommentVoteService;
 import pSystem.business.SuggestionService;
 import pSystem.business.UserService;
 import pSystem.model.*;
 import pSystem.persistence.CategoryRepository;
-import pSystem.persistence.CommentVoteRepository;
+import pSystem.persistence.RestringedWordsRepository;
 import pSystem.persistence.SuggestionRepository;
 
 
@@ -30,15 +27,18 @@ public class Application {
 	@Autowired
 	private SuggestionService suggestionService;
 	
-	@Autowired
-
-	private CommentVoteService voteService;
+//	@Autowired
+//
+//	private CommentVoteService voteService;
+//	
+//	@Autowired
+//	private CommentVoteRepository vRepository;
 	
 	@Autowired
-	private CommentVoteRepository vRepository;
-	
-
 	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	private RestringedWordsRepository wordRepository;
 	
     public static void main(String[] args) {
     	SpringApplication.run(Application.class, args);
@@ -103,6 +103,9 @@ public class Application {
     		commentService.addComment(comentario2);
     		Comment comentario3 = new Comment("Comentario3 de prueba", sugerencia1, user2);
     		commentService.addComment(comentario3);
+    		
+    		RestringedWords word1 = new RestringedWords("puta");
+    		wordRepository.save(word1);
     	};
     }
 }

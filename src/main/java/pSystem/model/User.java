@@ -3,7 +3,20 @@ package pSystem.model;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "TUsers")
@@ -21,18 +34,23 @@ public class User implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "CITIZEN_ID")
+	@JsonIgnore
 	private Citizen citizen;
 	
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="user", cascade = CascadeType.PERSIST)
+	@JsonManagedReference(value = "user-suggestions")
 	private Set<Suggestion> suggestions = new HashSet<>();
 	
 	@OneToMany(mappedBy="user")
+	@JsonManagedReference(value = "user-comments")
 	private Set<Comment> comments = new HashSet<>();
 	
 	@OneToMany(mappedBy="user") 
+	@JsonManagedReference(value = "user-commentvotes")
 	private Set<CommentVote> commentsVotes = new HashSet<>();
 	
-	@OneToMany(mappedBy="user") 
+	@OneToMany(mappedBy="user", fetch = FetchType.EAGER)
+	@JsonManagedReference(value = "user-suggestionvotes")
 	private Set<SuggestionVote> suggestionsVotes = new HashSet<>();
 
 	User() {}
@@ -113,7 +131,7 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Usuario [username=" + username + ", password=" + password + "]";
+		return "User [username=" + username + ", password=" + password + "]";
 	}
 
 	@Override
@@ -146,4 +164,5 @@ public class User implements Serializable {
 			return false;
 		return true;
 	}	
+	
 }

@@ -7,6 +7,9 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="TComments")
 public class Comment implements Serializable {	
@@ -23,13 +26,16 @@ public class Comment implements Serializable {
 	private Date creationDate;
 	
 	@ManyToOne
+	@JsonBackReference(value = "suggestion-comments")
 	private Suggestion suggestion;
 	
 	@ManyToOne
+	@JsonBackReference(value = "user-comments")
 	private User user;
 	
-	@OneToMany(mappedBy="comment")
-	private Set<CommentVote> votes = new HashSet<>();
+	@OneToMany(mappedBy="comment", fetch = FetchType.EAGER)
+	@JsonManagedReference("comment-commentvotes")
+	private Set<CommentVote> votes = new HashSet<CommentVote>();
 	
 	Comment() {}
 
@@ -73,11 +79,18 @@ public class Comment implements Serializable {
 	}	
 
 	public Set<CommentVote> getVotes() {
-		return new HashSet<>(votes);
+		return new HashSet<CommentVote>(votes);
 	}
 
 	protected Set<CommentVote> _getVotes() {
 		return votes;
+	}	
+	
+
+	@Override
+	public String toString() {
+		return "Comment [id=" + id + ", contents=" + contents + ", creationDate=" + creationDate + ", suggestion="
+				+ suggestion + "]";
 	}
 
 	@Override
@@ -117,9 +130,4 @@ public class Comment implements Serializable {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "Comentario [id=" + id + ", contenido=" + contents + ", sugerencia=" + suggestion + ", usuario="
-				+ user + "]";
-	};
 }

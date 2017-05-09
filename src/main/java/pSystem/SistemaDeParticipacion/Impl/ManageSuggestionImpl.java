@@ -10,6 +10,9 @@ import pSystem.SistemaDeParticipacion.ManageSuggestion;
 import pSystem.model.Category;
 import pSystem.model.RestringedWords;
 import pSystem.model.Suggestion;
+import pSystem.model.SuggestionVote;
+import pSystem.model.User;
+import pSystem.model.types.VoteStatus;
 
 @Service
 public class ManageSuggestionImpl implements ManageSuggestion {
@@ -50,5 +53,20 @@ public class ManageSuggestionImpl implements ManageSuggestion {
 	@Override
 	public List<RestringedWords> findSuggestionRestringedWords() {
 		return manageSuggestionDB.findSuggestionRestringedWords();
+	}
+
+	@Override
+	public SuggestionVote voteSuggestion(Suggestion suggestion, User user, VoteStatus status) {
+		return manageSuggestionDB.voteSuggestion(suggestion, user, status);
+	}
+
+	@Override
+	public Long inFavourVotes(Suggestion suggestion) {
+		return manageSuggestionDB.inFavourVotes(suggestion);
+	}
+
+	@Override
+	public RestringedWords addRestringedWord(RestringedWords word) {
+		return manageSuggestionDB.addRestringedWord(word);
 	}
 }

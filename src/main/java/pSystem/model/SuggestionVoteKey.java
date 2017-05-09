@@ -46,4 +46,5 @@ public class SuggestionVoteKey implements Serializable {
 			return false;
 		return true;
 	}	
+	
 }

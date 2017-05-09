@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import pSystem.business.SuggestionService;
 import pSystem.model.Suggestion;
+import pSystem.model.SuggestionVote;
+import pSystem.model.User;
+import pSystem.model.types.VoteStatus;
 import pSystem.persistence.SuggestionRepository;
 
 @Service
@@ -16,28 +19,49 @@ public class SuggestionServiceImpl implements SuggestionService {
 	private SuggestionRepository suggestionRepository;
 
 	@Override
-	public Suggestion addSuggestion(Suggestion sugerencia) {
-		return suggestionRepository.save(sugerencia);
+	public Suggestion addSuggestion(Suggestion suggestion) {
+		return suggestionRepository.save(suggestion);
 	}
 
 	@Override
-	public void updateSuggestion(Suggestion sugerencia) {
-		suggestionRepository.save(sugerencia);
+	public void deleteSuggestion(Suggestion suggestion) {
+		suggestionRepository.delete(suggestion);
 	}
 
 	@Override
-	public List<Suggestion> getSuggestions() {
+	public void updateSuggestion(Suggestion suggestion) {
+		suggestionRepository.save(suggestion);
+	}
+
+	@Override
+	public Suggestion findSuggestion(Long suggestionId) {
+		return suggestionRepository.findOne(suggestionId);
+	}
+	
+	@Override
+	public void addVote(Suggestion suggestion, User user, VoteStatus vote) {
+		new SuggestionVote(suggestion, user, vote);
+		suggestionRepository.save(suggestion);		
+	}
+
+	@Override
+	public void deleteByIdSuggestion(Long suggestionId) {
+		suggestionRepository.delete(suggestionId);
+	}
+
+	@Override
+	public List<Suggestion> findAllSuggestions() {
 		return suggestionRepository.findAll();
 	}
 
 	@Override
-	public Suggestion getSuggestion(Long id) {
-		return suggestionRepository.findOne(id);
+	public Long inFavourVotes(Suggestion suggestion) {
+		return suggestionRepository.countInFavourVotes(suggestion.getId());
 	}
 
 	@Override
-	public void deleteSuggestion(Long id) {
-		suggestionRepository.delete(id);
-	}
-
+	public int aganistVotes(Suggestion suggestion) {
+		// TODO Auto-generated method stub
+		return 0;
+	}	
 }

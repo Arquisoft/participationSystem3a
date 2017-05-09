@@ -1,5 +1,7 @@
 package pSystem;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +15,11 @@ import pSystem.SistemaDeParticipacion.ManageComment;
 import pSystem.SistemaDeParticipacion.ManageSuggestion;
 import pSystem.model.Association;
 import pSystem.model.Comment;
+import pSystem.model.RestringedWords;
 import pSystem.model.Suggestion;
-import pSystem.util.Util;
 
 @Controller
-public class AdminController {
+public class CouncilController {
 
 	@Autowired
 	private ManageSuggestion manageSuggestion;
@@ -25,10 +27,12 @@ public class AdminController {
 	@Autowired
 	private ManageComment manageComment;
 	
+	private Suggestion seleccionada;
+	
 	@RequestMapping(value = "/mostrarAdmin", method = RequestMethod.POST)
 	public String mostrarSugerencia(HttpSession session, Model model, @RequestParam("sugerencia") Long id) {
 		Suggestion sugerencia = manageSuggestion.getSuggestion(id);
-		Util.setSeleccionada(sugerencia);
+		setSeleccionada(sugerencia);
 		if (sugerencia != null) {
 			model.addAttribute("seleccionada", sugerencia);
 			return "mostrarSugerenciaAdmin";
@@ -39,8 +43,8 @@ public class AdminController {
 	@RequestMapping(value = "/eliminarComentario", method = RequestMethod.POST)
 	public String eliminarComentario(HttpSession session, Model model, @RequestParam("comentario") Long id) {
 		manageComment.deleteComment(id);
-		System.out.println(Util.getSeleccionada()+"\n"+"\n");
-		model.addAttribute("seleccionada", manageSuggestion.getSuggestion(Util.getSeleccionada().getId()));
+		System.out.println(getSeleccionada()+"\n"+"\n");
+		model.addAttribute("seleccionada", manageSuggestion.getSuggestion(getSeleccionada().getId()));
 		return "mostrarSugerenciaAdmin";
 	}
 
@@ -52,13 +56,34 @@ public class AdminController {
 			manageComment.deleteComment(c.getId());
 		}
 		manageSuggestion.deleteSuggestion(id);
-		Util.cargarSugerencias(model);
+		List<Suggestion> sugerencias = manageSuggestion.getSuggestions();
+		model.addAttribute("sugerencias", sugerencias);
 		return "listaSugerenciasAdmin";
 	}
 	
 	@RequestMapping(value = "/listarSugerenciasAdmin", method = RequestMethod.POST)
 	public String irALista(Model model) {
-		Util.cargarSugerencias(model);
+		List<Suggestion> sugerencias = manageSuggestion.getSuggestions();
+		model.addAttribute("sugerencias", sugerencias);
 		return "listaSugerenciasAdmin";
+	}
+	
+	@RequestMapping(value = "/anadirPalabra", method = RequestMethod.POST)
+	public String añadirSugerencia(Model model, @RequestParam String palabra) {
+		RestringedWords word = manageSuggestion.addRestringedWord(new RestringedWords(palabra));
+		if(word!=null){
+			System.out.println("añadida");
+		}
+		List<Suggestion> sugerencias = manageSuggestion.getSuggestions();
+		model.addAttribute("sugerencias", sugerencias);
+		return "listaSugerenciasAdmin";
+	}
+
+	public Suggestion getSeleccionada() {
+		return seleccionada;
+	}
+
+	public void setSeleccionada(Suggestion seleccionada) {
+		this.seleccionada = seleccionada;
 	}
 }

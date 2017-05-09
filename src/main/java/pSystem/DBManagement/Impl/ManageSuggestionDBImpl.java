@@ -6,16 +6,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pSystem.DBManagement.ManageSuggestionDB;
+import pSystem.business.CategoryService;
+import pSystem.business.RestringedWordsService;
 import pSystem.business.SuggestionService;
+import pSystem.business.SuggestionVoteService;
 import pSystem.model.Category;
 import pSystem.model.RestringedWords;
 import pSystem.model.Suggestion;
+import pSystem.model.SuggestionVote;
+import pSystem.model.User;
+import pSystem.model.types.VoteStatus;
 
 @Service
 public class ManageSuggestionDBImpl implements ManageSuggestionDB {
 	
 	@Autowired
 	private SuggestionService suggestionService;
+	
+	@Autowired
+	private SuggestionVoteService voteService;
+	
+	@Autowired
+	private CategoryService categoryService;
+	
+	@Autowired
+	private RestringedWordsService wordService;
 
 	@Override
 	public Suggestion addSuggestion(Suggestion suggestion) {
@@ -29,29 +44,41 @@ public class ManageSuggestionDBImpl implements ManageSuggestionDB {
 
 	@Override
 	public void deleteSuggestion(Long id) {
-		suggestionService.deleteSuggestion(id);
+		suggestionService.deleteByIdSuggestion(id);
 	}
 
 	@Override
 	public Suggestion getSuggestion(Long id) {
-		return suggestionService.getSuggestion(id);
+		return suggestionService.findSuggestion(id);
 	}
 
 	@Override
 	public List<Suggestion> getSuggestions() {
-		return suggestionService.getSuggestions();
+		return suggestionService.findAllSuggestions();
 	}
 
 	@Override
 	public List<Category> findSuggestionCategories() {
-		// TODO Auto-generated method stub
-		return null;
+		return categoryService.findAllCategories();
 	}
 
 	@Override
 	public List<RestringedWords> findSuggestionRestringedWords() {
-		// TODO Auto-generated method stub
-		return null;
+		return wordService.findAllWords();
 	}
 
+	@Override
+	public SuggestionVote voteSuggestion(Suggestion suggestion, User user, VoteStatus vote) {
+		return voteService.addSuggestionVote(suggestion, user, vote);
+	}
+
+	@Override
+	public Long inFavourVotes(Suggestion suggestion) {
+		return suggestionService.inFavourVotes(suggestion);
+	}
+
+	@Override
+	public RestringedWords addRestringedWord(RestringedWords word) {
+		return wordService.addRestringedWord(word);
+	}
 }

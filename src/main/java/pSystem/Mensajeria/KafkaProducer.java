@@ -1,4 +1,4 @@
-package pSystem.producers;
+package pSystem.Mensajeria;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,6 +6,13 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import pSystem.model.Comment;
+import pSystem.model.Suggestion;
+import pSystem.model.SuggestionVote;
 
 import javax.annotation.ManagedBean;
 
@@ -19,6 +26,26 @@ public class KafkaProducer {
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
+    
+    public void sendComentario(Comment comment) {
+		sendMessageJSON("comentarios", comment);
+	}
+
+	public void sendSugerencia(Suggestion suggestion) {		
+		sendMessageJSON("sugerencias", suggestion);
+	}
+	
+	public void sendSuggestionVote(SuggestionVote suggestionVote){
+		sendMessageJSON("suggestionVote", suggestionVote);
+	}
+	
+	public void sendMessageJSON(String topic, Object data) {
+		try {
+			send(topic, new ObjectMapper().writeValueAsString(data));
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
 
     public void send(String topic, String data) {
         ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, data);
@@ -34,5 +61,4 @@ public class KafkaProducer {
             }
         });
     }
-
 }

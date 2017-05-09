@@ -46,4 +46,5 @@ public class CommentVoteKey implements Serializable {
 			return false;
 		return true;
 	}	
+	
 }

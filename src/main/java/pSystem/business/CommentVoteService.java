@@ -3,9 +3,13 @@ package pSystem.business;
 import pSystem.model.Comment;
 import pSystem.model.CommentVote;
 import pSystem.model.User;
+import pSystem.model.types.VoteStatus;
 
 public interface CommentVoteService {
 
-	CommentVote vote(Comment c, User u, boolean f);
+	//CRUD
+	public CommentVote addComentVote (Comment comment, User user, VoteStatus vote);
+	
+	//Otros
 	
 }

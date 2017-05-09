@@ -2,6 +2,7 @@ package pSystem.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -9,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import pSystem.model.types.VoteStatus;
 
@@ -20,11 +23,13 @@ public class SuggestionVote implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST)
+	@JsonBackReference(value = "suggestion-suggestionvotes")
 	private Suggestion suggestion;
 	
 	@Id
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST)
+	@JsonBackReference(value = "user-suggestionvotes")
 	private User user;
 	
 	@Enumerated(EnumType.STRING)
@@ -33,9 +38,7 @@ public class SuggestionVote implements Serializable {
 	SuggestionVote() {}
 
 	public SuggestionVote(Suggestion suggestion, User user, VoteStatus vote) {		
-		this.suggestion = suggestion;
-		this.user = user;
-		this.vote = vote;
+		super();
 		Association.VotarSugerencia.link(suggestion, this, user);
 	}
 
@@ -62,4 +65,5 @@ public class SuggestionVote implements Serializable {
 	public void setVote(VoteStatus vote) {
 		this.vote = vote;
 	}
+	
 }

@@ -15,9 +15,11 @@ import pSystem.SistemaDeParticipacion.ManageComment;
 import pSystem.SistemaDeParticipacion.ManageSuggestion;
 import pSystem.model.Category;
 import pSystem.model.Comment;
+import pSystem.model.RestringedWords;
 import pSystem.model.Suggestion;
+import pSystem.model.SuggestionVote;
 import pSystem.model.User;
-import pSystem.util.Util;
+import pSystem.model.types.VoteStatus;
 
 @Controller
 public class UserController {
@@ -28,10 +30,12 @@ public class UserController {
 	@Autowired
 	private ManageComment manageComment;
 	
+	private Suggestion seleccionada;
+
 	@RequestMapping(value = "/mostrar", method = RequestMethod.POST)
 	public String mostrarSugerencia(HttpSession session, Model model, @RequestParam("sugerencia") Long id) {
 		Suggestion sugerencia = manageSuggestion.getSuggestion(id);
-		Util.setSeleccionada(sugerencia);
+		setSeleccionada(sugerencia);
 		if (sugerencia != null) {
 			model.addAttribute("seleccionada", sugerencia);
 			return "mostrarSugerencia";
@@ -46,30 +50,78 @@ public class UserController {
 
 	@RequestMapping(value = "/anadirSugerencia", method = RequestMethod.POST)
 	public String añadirSugerencia(HttpSession session, Model model, @RequestParam String contenido) {
-		List<Category> categorias = manageSuggestion.findSuggestionCategories();
-		Suggestion suggestion = new Suggestion(contenido, categorias.get(0), (User) session.getAttribute("user"));
-		manageSuggestion.addSuggestion(suggestion);
-		Util.cargarSugerencias(model);
+		List<RestringedWords> prohibidas = manageSuggestion.findSuggestionRestringedWords();
+		boolean contiene=false;
+		for(RestringedWords r: prohibidas){
+			if(contenido.toUpperCase().contains(r.getWord().toUpperCase())){
+				contiene=true;
+				break;
+			}
+		}
+		if(!contiene){
+			List<Category> categorias = manageSuggestion.findSuggestionCategories();
+			Suggestion suggestion = new Suggestion(contenido, categorias.get(0), (User) session.getAttribute("user"));
+			manageSuggestion.addSuggestion(suggestion);
+		}
+		List<Suggestion> sugerencias = manageSuggestion.getSuggestions();
+		model.addAttribute("sugerencias", sugerencias);
 		return "listaSugerencias";
-	}	
+	}
 
 	@RequestMapping("/nuevoComentario")
 	public String nuevoComentario(@RequestParam("sugerencia") Suggestion sugerencia) {
-		Util.setSeleccionada(sugerencia);
+		setSeleccionada(sugerencia);
 		return "añadirComentario";
 	}
 
 	@RequestMapping(value = "/anadirComentario", method = RequestMethod.POST)
 	public String añadirComentario(HttpSession session, Model model, @RequestParam String contenido) {
-		Comment comentario = new Comment(contenido, Util.getSeleccionada(), (User) session.getAttribute("user"));
-		manageComment.addComment(comentario);
-		model.addAttribute("seleccionada", manageSuggestion.getSuggestion(Util.getSeleccionada().getId()));
+		List<RestringedWords> prohibidas = manageSuggestion.findSuggestionRestringedWords();
+		boolean contiene = false;
+		for(RestringedWords r: prohibidas){
+			if(contenido.toUpperCase().contains(r.getWord().toUpperCase())){
+				contiene = true;
+				break;
+			}
+		}
+		if(!contiene){
+			Comment comentario = new Comment(contenido, getSeleccionada(), (User) session.getAttribute("user"));
+			manageComment.addComment(comentario);
+		}
+		model.addAttribute("seleccionada", manageSuggestion.getSuggestion(getSeleccionada().getId()));
 		return "mostrarSugerencia";
 	}
-	
+
 	@RequestMapping(value = "/listarSugerencias", method = RequestMethod.POST)
 	public String irALista(Model model) {
-		Util.cargarSugerencias(model);
+		List<Suggestion> sugerencias = manageSuggestion.getSuggestions();
+		model.addAttribute("sugerencias", sugerencias);
 		return "listaSugerencias";
+	}
+
+	@RequestMapping(value = "/votarSugerencia", method = RequestMethod.POST)
+	public String votarSugerencia(HttpSession session, Model model,  @RequestParam("voto") String contenido) {
+		SuggestionVote vote = null;
+		if (contenido.equals("positivo")) {
+			vote = manageSuggestion.voteSuggestion(getSeleccionada(), (User) session.getAttribute("user"),
+					VoteStatus.IN_FAVOUR);
+		} else {
+			vote = manageSuggestion.voteSuggestion(getSeleccionada(), (User) session.getAttribute("user"),
+					VoteStatus.AGAINST);
+		}	
+		if(vote!=null){
+			System.out.println("Voto añadido");
+		}
+		List<Suggestion> sugerencias = manageSuggestion.getSuggestions();
+		model.addAttribute("sugerencias", sugerencias);
+		return "listaSugerencias";
+	}
+
+	public Suggestion getSeleccionada() {
+		return seleccionada;
+	}
+
+	public void setSeleccionada(Suggestion seleccionada) {
+		this.seleccionada = seleccionada;
 	}
 }

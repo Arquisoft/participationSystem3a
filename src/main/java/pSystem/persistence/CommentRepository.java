@@ -6,12 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import pSystem.model.Comment;
-import pSystem.model.Suggestion;;
+import pSystem.model.Suggestion;
+
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long>{
 	
-	List<Comment> findBySugerenciaOrderByFechaDesc(Suggestion sugerencia);
-	List<Comment> findBySugerenciaOrderByFechaAsc(Suggestion sugerencia);
-
+	List<Comment> findBySuggestionOrderByCreationDateDesc(Suggestion suggestion);
+	List<Comment> findBySuggestionOrderByCreationDateAsc(Suggestion suggestion);
+	
 }

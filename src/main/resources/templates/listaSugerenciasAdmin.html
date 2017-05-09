@@ -10,6 +10,23 @@
 		</form>
 	</div>
 	
+	<h2>Nueva palabra prohibida</h2>
+	<form th:action="@{/anadirPalabra}" method="POST">
+		<div>
+			<table border="1">
+				<tr>
+				    <td><label for="palabra">Palabra: </label></td>
+				    <td><input type="text" id="palabra" name="palabra"/></td>
+			    </tr>
+			    <tr>
+			    	<td/>
+			    	<td align="center"><button id="nuevaPalabra" type="submit">Añadir</button></td>
+			    </tr>
+		    </table>
+	    </div>
+	</form>
+	
+	<h2>Sugerencias recibidas</h2>
 	<div th:id="todas">
 			<table border="1">
 				<tr>
@@ -19,25 +36,25 @@
 					<th></th>
 				</tr>
 				<tr th:each="s : ${sugerencias}">	
-			                  <td th:text="${s.contenido}"></td>
+			                  <td th:text="${s.contents}" align="center"/>
 			                  <td></td>
-			                  <td th:text="${s.usuario.usuario}"/> 
+			                  <td th:text="${s.user.username}" align="center"/> 
 		       				  <td></td>
-		       				  <td>
-		       				  <form th:action="@{/mostrarAdmin(sugerencia=${s.id})}" method="POST">
-		       				  	<button id="ver" type="submit" name="ver" th:value="${s.contenido}">
-		       				  	Mostrar
-		       				  	</button>
-		       				 
-		       				  </form>
+		       				  <td align="center">
+			       				  <form th:action="@{/mostrarAdmin(sugerencia=${s.id})}" method="POST">
+			       				  	<button id="ver" type="submit" name="ver" th:value="${s.contents}">
+			       				  	Mostrar
+			       				  	</button>
+			       				 
+			       				  </form>
 		       				  </td> 
-		       				  <td>
-		       				  <form th:action="@{/eliminarSugerencia(sugerencia=${s.id})}" method="POST">
-		       				  	<button id="eliminar" type="submit" name="eliminar" th:value="${s.contenido}">
-		       				  	Eliminar
-		       				  	</button>
-		       				 
-		       				  </form>
+		       				  <td align="center">
+			       				  <form th:action="@{/eliminarSugerencia(sugerencia=${s.id})}" method="POST">
+			       				  	<button id="eliminar" type="submit" name="eliminar" th:value="${s.contents}">
+			       				  	Eliminar
+			       				  	</button>
+			       				 
+			       				  </form>
 		       				  </td> 
 				</tr>
 			</table>

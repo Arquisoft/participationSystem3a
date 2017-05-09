@@ -3,14 +3,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Anadir sugerencia</title>
 </head>
-<body>
-<h1>Nueva sugerencia</h1>
-<form th:action="@{/anadirSugerencia}" method="POST">
-	<div>
-	    <label for="contenido">Contenido: </label>
-	    <input type="text" id="contenido" name="contenido"/>
-    </div>
-    <button id="nuevaSugerencia" type="submit">Nueva sugerencia</button>
-</form>
-</body>
+	<body>
+		<h1>Nueva sugerencia</h1>
+			<form th:action="@{/anadirSugerencia}" method="POST">
+				<div>
+					<table border="1">
+						<tr>
+						    <td align="center"><label for="contenido">Contenido: </label></td>
+						    <td align="center"><input type="text" id="contenido" name="contenido"/></td>
+					    </tr>
+					    <tr>
+					    	<td/>
+					    	<td><button id="nuevaSugerencia" type="submit">Nueva sugerencia</button></td>
+					    </tr>
+				    </table>
+			    </div>
+			</form>
+	</body>
 </html>
